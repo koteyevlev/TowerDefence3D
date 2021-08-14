@@ -400,3 +400,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 4
+  _targetingRange: 1.5
+  _turret: {fileID: 4186759016147753693}
+  _laserBeam: {fileID: 3231633428867708269}

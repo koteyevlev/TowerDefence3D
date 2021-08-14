@@ -47,6 +47,7 @@ public class Game : MonoBehaviour
             SpawnEnemy();
         }
         _enemies.GameUpdate();
+        Physics.SyncTransforms();
         _board.GameUpdate();
     }
 

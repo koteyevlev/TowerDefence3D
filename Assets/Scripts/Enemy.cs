@@ -7,6 +7,7 @@ public class Enemy: MonoBehaviour
     private Transform _model;
     public EnemyFactory OriginFactory { get; set; }
     public float Scale { get; private set; }
+    public float Health { get; private set; }
 
     private GameTile _tileFrom, _tileTo;
     private Vector3 _positionFrom, _positionTo;
@@ -18,12 +19,14 @@ public class Enemy: MonoBehaviour
     private float _pathOffset, _speed;
 
 
+
     public void Initialize(float scale, float pathOffset, float speed)
     {
         _model.localScale = new Vector3(scale, scale, scale);
         _pathOffset = pathOffset;
         _speed = speed;
         Scale = scale;
+        Health = 100f * scale;
     }
     public void SpawnOn(GameTile spawnPoint)
     {
@@ -32,6 +35,11 @@ public class Enemy: MonoBehaviour
         _tileFrom = spawnPoint;
         _tileTo = spawnPoint.NextOnPath;
         PrepareIntro();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
     }
 
     private void PrepareIntro()
@@ -57,6 +65,11 @@ public class Enemy: MonoBehaviour
     }
     public bool GameUpdate()
     {
+        if (Health < 0)
+        {
+            OriginFactory.Reclaim(this);
+            return false;
+        }
         _progress += Time.deltaTime * _progressFactor;
         while (_progress > 1)
         {
