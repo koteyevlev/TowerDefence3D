@@ -16,6 +16,7 @@ public class GameBoard : MonoBehaviour
     private Queue<GameTile> _searchFrontier = new Queue<GameTile>();
     private GameTileContentFactory _contentFactory;
     private List<GameTile> _spawnPoints = new List<GameTile>();
+    private List<GameTileContent> _contetToUpdate = new List<GameTileContent>();
 
     public int SpownPointsCount => _spawnPoints.Count;
     public void Initialize(Vector2Int size, GameTileContentFactory contentFactory)
@@ -160,11 +161,39 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+    public void ToggleTower(GameTile tile)
+    {
+        if (tile.Content.Type == GameTileContentType.Tower)
+        {
+            _contetToUpdate.Remove(tile.Content);
+            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            FindPaths();
+
+        }
+        else if (tile.Content.Type == GameTileContentType.Empty)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Tower);
+            if (FindPaths())
+            {
+                _contetToUpdate.Add(tile.Content);
+            }
+            else
+            {
+                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+                FindPaths();
+            }
+        }
+        else if (tile.Content.Type == GameTileContentType.Wall)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Tower);
+            _contetToUpdate.Add(tile.Content);
+        }
+    }
 
     public GameTile GetTile(Ray ray)
     {
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, float.MaxValue, 1))
         {
             int x = (int)(hit.point.x + _size.x * 0.5f);
             int y = (int)(hit.point.z + _size.y * 0.5f);
@@ -179,5 +208,13 @@ public class GameBoard : MonoBehaviour
     public GameTile GetSpawnPoint(int index)
     {
         return _spawnPoints[index];
+    }
+
+    public void GameUpdate()
+    {
+        for (int i = 0; i < _contetToUpdate.Count; i++)
+        {
+            _contetToUpdate[i].GameUpdate();
+        }
     }
 }

@@ -13,3 +13,12 @@ MonoBehaviour:
   m_Name: EnemyFacrory
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4855582417177342594, guid: 22982f4aeaf54b04b8e6667e8638ad1a, type: 3}
+  _scale:
+    _min: 0.5
+    _max: 2
+  _pathOffset:
+    _min: -0.4
+    _max: 0.4
+  _speed:
+    _min: 0.2
+    _max: 4.9999995
