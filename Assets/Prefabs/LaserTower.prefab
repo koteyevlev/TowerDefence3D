@@ -25,9 +25,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815354143663869608}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.25, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalRotation: {x: 0.20199288, y: -0.19156505, z: 0.040322904, w: 0.95962274}
+  m_LocalPosition: {x: -0.41803423, y: 0.7703947, z: 1.0053216}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 2.3794498}
   m_Children: []
   m_Father: {fileID: 2437585091583321385}
   m_RootOrder: 3
@@ -296,7 +296,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5716798445935731383}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.20199288, y: -0.19156505, z: 0.040322904, w: 0.95962274}
   m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
@@ -361,9 +361,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2437585091583321385}
-  - component: {fileID: 5568290181749809066}
+  - component: {fileID: 8902008406104975686}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: LaserTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,7 +377,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7870717646780903997}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.001, z: 0}
+  m_LocalPosition: {x: -3, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1389380387461537150}
@@ -387,7 +387,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5568290181749809066
+--- !u!114 &8902008406104975686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -396,10 +396,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7870717646780903997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d344d71443e8ba0429fae1a9a280bb31, type: 3}
+  m_Script: {fileID: 11500000, guid: f7ebd87561e3e4c4eb233e2b48ab78b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 4
-  _targetingRange: 1.5
+  _targetingRange: 2.8
   _turret: {fileID: 4186759016147753693}
   _laserBeam: {fileID: 3231633428867708269}
+  _damagePerSecond: 30
