@@ -20,13 +20,13 @@ public class Enemy: GameBehaviour
 
 
 
-    public void Initialize(float scale, float pathOffset, float speed)
+    public void Initialize(float scale, float pathOffset, float speed, float health)
     {
         _model.localScale = new Vector3(scale, scale, scale);
         _pathOffset = pathOffset;
         _speed = speed;
         Scale = scale;
-        Health = 100f * scale;
+        Health = health;
     }
     public void SpawnOn(GameTile spawnPoint)
     {
