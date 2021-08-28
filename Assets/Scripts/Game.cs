@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -15,15 +16,22 @@ public class Game : MonoBehaviour
     private GameTileContentFactory _contentFactory;
 
     [SerializeField]
-    private EnemyFactory _enemyFactory;
-
-    [SerializeField]
     private WarFactory _warFactory;
 
-    [SerializeField, Range(0.1f, 10f)]
-    private float _spawnSpeed;
+    [SerializeField]
+    private GameScenario _scenario;
 
-    private float _spawnProgress;
+    [SerializeField, Range(10, 100)]
+    private int _startingPlayerHealth;
+
+    [SerializeField, Range(10f, 50f)]
+    private float _prepareTime;
+
+    private bool _scenarioInProcess;
+    private int _currentPlayerhealth;
+    private bool _isPaused;
+    private GameScenario.State _activeScenario;
+
     private TowerType _currentTowerType;
 
     private GameBehaviourCollection _enemies = new GameBehaviourCollection();
@@ -41,9 +49,19 @@ public class Game : MonoBehaviour
     private void Start()
     {
         _board.Initialize(_boardSize, _contentFactory);
+        BeginNewGame();
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _isPaused = !_isPaused;
+            Time.timeScale = _isPaused ? 0f : 1f;
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            BeginNewGame();
+        }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             _currentTowerType = TowerType.Laser;
@@ -62,24 +80,33 @@ public class Game : MonoBehaviour
             HandleAlternativeTouch();
         }
 
-        _spawnProgress += _spawnSpeed * Time.deltaTime;
-        while (_spawnProgress >= 1f)
+        if (_scenarioInProcess)
         {
-            _spawnProgress -= 1f;
-            SpawnEnemy();
+            if (_currentPlayerhealth <= 0)
+            {
+                Debug.Log("defeated");
+                BeginNewGame();
+            }
+            if (!_activeScenario.Progress() && _enemies.IsEmpty)
+            {
+                Debug.Log("Win");
+                BeginNewGame();
+                _activeScenario.Progress();
+            }
         }
+
         _enemies.GameUpdate();
         Physics.SyncTransforms();
         _board.GameUpdate();
         _nonEnemies.GameUpdate();
     }
 
-    private void SpawnEnemy()
+    public static void SpawnEnemy(EnemyFactory factory, EnemyType type)
     {
-        GameTile spawnPoint = _board.GetSpawnPoint(Random.Range(0, _board.SpownPointsCount));
-        Enemy enemy = _enemyFactory.Get((EnemyType)Random.Range(0, 3));
+        GameTile spawnPoint = _instance._board.GetSpawnPoint(Random.Range(0, _instance._board.SpownPointsCount));
+        Enemy enemy = factory.Get(type);
         enemy.SpawnOn(spawnPoint);
-        _enemies.Add(enemy);
+        _instance._enemies.Add(enemy);
     }
 
     private void HandleTouch()
@@ -126,5 +153,33 @@ public class Game : MonoBehaviour
         Explosion explosion = _instance._warFactory.Explosion;
         _instance._nonEnemies.Add(explosion);
         return explosion;
+    }
+
+    public void BeginNewGame()
+    {
+        _scenarioInProcess = false;
+        if (_prepareRoutine != null)
+        {
+            StopCoroutine(_prepareRoutine);
+        }
+        _enemies.Clear();
+        _nonEnemies.Clear();
+        _board.Clear();
+        _currentPlayerhealth = _startingPlayerHealth;
+        _prepareRoutine = StartCoroutine(PrepareRoutine());
+    }
+
+    public static void EnemyReachedDestination()
+    {
+        _instance._currentPlayerhealth--;
+    }
+
+    private Coroutine _prepareRoutine;
+
+    private IEnumerator PrepareRoutine()
+    {
+        yield return new WaitForSeconds(_prepareTime);
+        _activeScenario = _scenario.Begin();
+        _scenarioInProcess = true;
     }
 }

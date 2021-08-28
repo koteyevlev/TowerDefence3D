@@ -50,8 +50,7 @@ public class GameBoard : MonoBehaviour
                 tile.Content = _contentFactory.Get(GameTileContentType.Empty);
             }
         }
-        ToggleDestination(_tiles[_tiles.Length / 2]);
-        ToggleSpawnPoint(_tiles[0]);
+        Clear();
     }
 
     public bool FindPaths()
@@ -216,5 +215,17 @@ public class GameBoard : MonoBehaviour
         {
             _contetToUpdate[i].GameUpdate();
         }
+    }
+
+    public void Clear()
+    {
+        foreach (var tile in _tiles)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+        }
+        _spawnPoints.Clear();
+        _contetToUpdate.Clear();
+        ToggleDestination(_tiles[_tiles.Length / 2]);
+        ToggleSpawnPoint(_tiles[0]);
     }
 }

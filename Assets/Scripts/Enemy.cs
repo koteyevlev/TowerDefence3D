@@ -67,7 +67,7 @@ public class Enemy: GameBehaviour
     {
         if (Health < 0)
         {
-            OriginFactory.Reclaim(this);
+            Recycle();
             return false;
         }
         _progress += Time.deltaTime * _progressFactor;
@@ -75,7 +75,8 @@ public class Enemy: GameBehaviour
         {
             if (_tileTo == null)
             {
-                OriginFactory.Reclaim(this);
+                Game.EnemyReachedDestination();
+                Recycle();
                 return false;
             }
             _progress = (_progress - 1f) / _progressFactor;
@@ -148,5 +149,10 @@ public class Enemy: GameBehaviour
         _model.localPosition = new Vector3(_pathOffset, 0f);
         transform.localPosition = _positionFrom;
         _progressFactor = _speed / (Mathf.PI * Mathf.Max(Mathf.Abs(_pathOffset), 0.2f));
+    }
+
+    public override void Recycle()
+    {
+        OriginFactory.Reclaim(this);
     }
 }

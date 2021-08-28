@@ -4,13 +4,16 @@ public abstract class Tower : GameTileContent
     [SerializeField, Range(1.5f, 10.5f)]
     protected float _targetingRange = 1.5f;
 
+    private const int ENEMY_LAYER_MASK = 1 << 9;
+
     public abstract TowerType Type { get; }
 
     protected bool IsAcquireTarget(out TargetPoint target)
     {
-        if (TargetPoint.FillBuffer(transform.localPosition, _targetingRange))
+        Collider[] targets = Physics.OverlapSphere(transform.localPosition, _targetingRange, ENEMY_LAYER_MASK);
+        if (targets.Length > 0)
         {
-            target = TargetPoint.GetBuffered(0);
+            target = targets[0].GetComponent<TargetPoint>();
             return true;
         }
         target = null;
