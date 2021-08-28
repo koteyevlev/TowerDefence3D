@@ -9,7 +9,7 @@ public class LaserTower : Tower
     private float _damagePerSecond = 30f;
     private Vector3 _laserBeamScale;
 
-    public override TowerType Type => TowerType.Laser;
+    public override TowerType TowerType => TowerType.Laser;
 
     private TargetPoint _target;
 

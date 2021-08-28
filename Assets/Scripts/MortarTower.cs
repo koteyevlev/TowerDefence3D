@@ -9,7 +9,7 @@ public class MortarTower : Tower
     private float _shellBlastRadius = 1f;
     [SerializeField, Range(1f, 100f)]
     private float _damage;
-    public override TowerType Type => TowerType.Mortar;
+    public override TowerType TowerType => TowerType.Mortar;
     private float _launchSpeed;
     private float _launchProgress;
 
@@ -62,7 +62,7 @@ public class MortarTower : Tower
         float tanTheta = (s2 + Mathf.Sqrt(r)) / (g * x);
         float cosTheta = Mathf.Cos(Mathf.Atan(tanTheta));
         float sinTheta = cosTheta * tanTheta;
-        Vector3 prev = launchPoint, next;
+        Vector3 prev = launchPoint;
 
         _mortar.localRotation= Quaternion.LookRotation(new Vector3(dir.x, tanTheta, dir.y));
 

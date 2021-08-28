@@ -6,7 +6,7 @@ public abstract class Tower : GameTileContent
 
     private const int ENEMY_LAYER_MASK = 1 << 9;
 
-    public abstract TowerType Type { get; }
+    public abstract TowerType TowerType { get; }
 
     protected bool IsAcquireTarget(out TargetPoint target)
     {
@@ -29,7 +29,8 @@ public abstract class Tower : GameTileContent
         Vector3 myPosision = transform.localPosition;
         Vector3 targetPosition = target.Position;
         if (Vector3.Distance(myPosision, targetPosition) > 
-            _targetingRange + target.ColliderSize * target.Enemy.Scale)
+            _targetingRange + target.ColliderSize * target.Enemy.Scale ||
+            target.IsEnabled == false)
         {
             target = null;
             return false;

@@ -5,6 +5,9 @@ public class Enemy: GameBehaviour
 {
     [SerializeField]
     private Transform _model;
+    [SerializeField]
+    private EnemyView _enemyView;
+    
     public EnemyFactory OriginFactory { get; set; }
     public float Scale { get; private set; }
     public float Health { get; private set; }
@@ -27,6 +30,7 @@ public class Enemy: GameBehaviour
         _speed = speed;
         Scale = scale;
         Health = health;
+        _enemyView.Init(this);
     }
     public void SpawnOn(GameTile spawnPoint)
     {
@@ -67,7 +71,8 @@ public class Enemy: GameBehaviour
     {
         if (Health < 0)
         {
-            Recycle();
+            DisableView();
+            _enemyView.Die();
             return false;
         }
         _progress += Time.deltaTime * _progressFactor;
@@ -154,5 +159,11 @@ public class Enemy: GameBehaviour
     public override void Recycle()
     {
         OriginFactory.Reclaim(this);
+    }
+
+    private void DisableView()
+    {
+        _enemyView.GetComponent<Collider>().enabled = false;
+        _enemyView.GetComponent<TargetPoint>().IsEnabled = false;
     }
 }
