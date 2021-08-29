@@ -69,6 +69,10 @@ public class Enemy: GameBehaviour
     }
     public override bool GameUpdate()
     {
+        if (_enemyView.IsInited == false)
+        {
+            return true;
+        }
         if (Health < 0)
         {
             DisableView();

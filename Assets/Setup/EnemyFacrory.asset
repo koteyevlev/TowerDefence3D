@@ -26,20 +26,20 @@ MonoBehaviour:
     Health:
       _min: 100
       _max: 100
-  _medium:
+  _ellen:
     Prefab: {fileID: 9121568671495264667, guid: 189bc1f83fd50984587097cbe0751d2d, type: 3}
     Scale:
-      _min: 1
-      _max: 1.5
+      _min: 1.2375222
+      _max: 1.2375222
     PathOffset:
-      _min: -0.1
-      _max: 0.1
+      _min: 0
+      _max: 0.19359718
     Speed:
-      _min: 1.2
-      _max: 5
+      _min: 2.4632726
+      _max: 2.4632726
     Health:
-      _min: 400
-      _max: 500
+      _min: 436.8705
+      _max: 436.8705
   _golem:
     Prefab: {fileID: 4855582417177342594, guid: 22982f4aeaf54b04b8e6667e8638ad1a, type: 3}
     Scale:
@@ -52,5 +52,5 @@ MonoBehaviour:
       _min: 1
       _max: 1
     Health:
-      _min: 100
-      _max: 100
+      _min: 876.0941
+      _max: 876.0941

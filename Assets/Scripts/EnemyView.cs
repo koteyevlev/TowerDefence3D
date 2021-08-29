@@ -4,7 +4,8 @@ public class EnemyView : MonoBehaviour
 {
     protected Animator _animator;
     protected Enemy _enemy;
-    private const float _waitingBeforeDestroy = 3f;
+
+    public bool IsInited { get; protected set; } = false;
 
     protected const string DIED_KEY = "Died";
 
@@ -17,6 +18,12 @@ public class EnemyView : MonoBehaviour
     public virtual void Die()
     {
         _animator.SetBool(DIED_KEY, true);
+    }
+
+    public void OnSpawnAnimationFinished()
+    {
+        IsInited = true;
+        GetComponent<TargetPoint>().IsEnabled = true;
     }
 }
 

@@ -3,7 +3,17 @@ public class TargetPoint : MonoBehaviour
 {
     public Enemy Enemy { get; private set; }
 
-    public bool IsEnabled { get; set; } = true;
+    private bool _isEnabled = false;
+    private SphereCollider _collider;
+    public bool IsEnabled
+    {
+        get { return _isEnabled; }
+        set
+        {
+            _collider.enabled = value;
+            _isEnabled = value;
+        }
+    }
     public Vector3 Position => transform.position;
     public float ColliderSize { get; private set; }
 
@@ -13,6 +23,8 @@ public class TargetPoint : MonoBehaviour
     public void Awake()
     {
         Enemy = transform.root.GetComponent<Enemy>();
+        _collider = GetComponent<SphereCollider>();
+        _collider.enabled = false;
         ColliderSize = GetComponent<SphereCollider>().radius * transform.localScale.x;
     }
 
