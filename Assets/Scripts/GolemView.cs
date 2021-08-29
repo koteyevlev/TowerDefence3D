@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-public class GolemView : EnemyView
+public class ChomperView : EnemyView
 {
-
     public void OnDieAnimationFinished()
     {
         _enemy.Recycle();

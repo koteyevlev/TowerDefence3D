@@ -17,13 +17,6 @@ public class EnemyView : MonoBehaviour
     public virtual void Die()
     {
         _animator.SetBool(DIED_KEY, true);
-        StartCoroutine(DestroyRoutine());
-    }
-
-    private IEnumerator DestroyRoutine()
-    {
-        yield return new WaitForSeconds(_waitingBeforeDestroy);
-        _enemy.Recycle();
     }
 }
 

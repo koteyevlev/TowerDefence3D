@@ -21,7 +21,7 @@ public class EnemyFactory: GameObjectFactory
         public FloatRange Health = new FloatRange(100f);
     }
     [SerializeField]
-    private EnemyConfig _small, _medium, _large;
+    private EnemyConfig _chomper, _medium, _golem;
 
     public Enemy Get(EnemyType type)
     {
@@ -44,12 +44,12 @@ public class EnemyFactory: GameObjectFactory
     {
         switch (type)
         {
-            case EnemyType.Small:
-                return _small;
+            case EnemyType.Chomper:
+                return _chomper;
             case EnemyType.Medium:
                 return _medium;
-            case EnemyType.Large:
-                return _large;
+            case EnemyType.Golem:
+                return _golem;
         }
         Debug.LogError($"Cant find { type }");
         return _medium;
