@@ -14,7 +14,7 @@ public class TargetPoint : MonoBehaviour
             _isEnabled = value;
         }
     }
-    public Vector3 Position => transform.position;
+    public Vector3 Position => new Vector3(0, 0.1f, 0) + transform.position;
     public float ColliderSize { get; private set; }
 
     private const int ENEMY_LAYER_MASK = 1 << 9;
