@@ -2,7 +2,7 @@
 public enum EnemyType
 {
     Golem,
-    Medium,
+    Ellen,
     Chomper
 }
 

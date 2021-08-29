@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public class ChomperView : EnemyView
+public class EllenView : EnemyView
 {
     public void OnDieAnimationFinished()
     {
