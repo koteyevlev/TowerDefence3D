@@ -1,50 +1,53 @@
 ﻿using UnityEngine;
 using System;
+using TowerDefence3d.Scripts.Enemies;
 
-[Serializable]
-public class EnemySpawnSequence
+namespace TowerDefence3d.Scripts.Setup
 {
-    [SerializeField]
-    private EnemyFactory _factory;
-    [SerializeField]
-    private EnemyType _type;
-    [SerializeField, Range(1, 100)]
-    private int _amount = 10;
-    [SerializeField, Range(0.1f, 10f)]
-    private float _cooldown = 1f;
-
     [Serializable]
-    public struct State
+    public class EnemySpawnSequence
     {
-        private EnemySpawnSequence _sequence;
-        private int _count;
-        private float _cooldown;
-        public State(EnemySpawnSequence sequence)
-        {
-            _sequence = sequence;
-            _count = 0;
-            _cooldown = sequence._cooldown;
-        }
+        [SerializeField]
+        private EnemyFactory _factory;
+        [SerializeField]
+        private EnemyType _type;
+        [SerializeField, Range(1, 100)]
+        private int _amount = 10;
+        [SerializeField, Range(0.1f, 10f)]
+        private float _cooldown = 1f;
 
-        public float Progress(float deltaTime)
+        [Serializable]
+        public struct State
         {
-            _cooldown += deltaTime;
-            while (_cooldown >= _sequence?._cooldown)
+            private EnemySpawnSequence _sequence;
+            private int _count;
+            private float _cooldown;
+            public State(EnemySpawnSequence sequence)
             {
-                _cooldown -= _sequence._cooldown;
-                if (_count >= _sequence._amount)
-                {
-                    return _cooldown;
-                }
-
-                _count++;
-                Game.SpawnEnemy(_sequence._factory, _sequence._type);
+                _sequence = sequence;
+                _count = 0;
+                _cooldown = sequence._cooldown;
             }
 
-            return -1f;
+            public float Progress(float deltaTime)
+            {
+                _cooldown += deltaTime;
+                while (_cooldown >= _sequence?._cooldown)
+                {
+                    _cooldown -= _sequence._cooldown;
+                    if (_count >= _sequence._amount)
+                    {
+                        return _cooldown;
+                    }
+
+                    _count++;
+                    Game.SpawnEnemy(_sequence._factory, _sequence._type);
+                }
+
+                return -1f;
+            }
         }
+
+        public State Begin() => new State(this);
     }
-
-    public State Begin() => new State(this);
 }
-

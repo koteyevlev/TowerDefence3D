@@ -1,23 +1,28 @@
-﻿using UnityEngine;
-[CreateAssetMenu]
-public class WarFactory : GameObjectFactory
+﻿using TowerDefence3d.Scripts.MapObject;
+using UnityEngine;
+
+namespace TowerDefence3d.Scripts.Setup
 {
-    [SerializeField]
-    private Shell _shellPrefab;
-    [SerializeField]
-    private Explosion _explosionPrefab;
-
-    public Shell Shell => Get(_shellPrefab);
-    public Explosion Explosion => Get(_explosionPrefab);
-    private T Get<T>(T prefab) where T : WarEntity
+    [CreateAssetMenu]
+    public class WarFactory : GameObjectFactory
     {
-        T instance = CreateGameObjectInstance(prefab);
-        instance.OriginFactory = this;
-        return instance;
-    }
+        [SerializeField]
+        private Shell _shellPrefab;
+        [SerializeField]
+        private Explosion _explosionPrefab;
 
-    public void Reclaim(WarEntity entity)
-    {
-        Destroy(entity.gameObject);
+        public Shell Shell => Get(_shellPrefab);
+        public Explosion Explosion => Get(_explosionPrefab);
+        private T Get<T>(T prefab) where T : WarEntity
+        {
+            T instance = CreateGameObjectInstance(prefab);
+            instance.OriginFactory = this;
+            return instance;
+        }
+
+        public void Reclaim(WarEntity entity)
+        {
+            Destroy(entity.gameObject);
+        }
     }
 }

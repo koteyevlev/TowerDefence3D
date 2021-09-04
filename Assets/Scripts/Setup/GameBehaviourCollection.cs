@@ -1,36 +1,39 @@
 ﻿using System.Collections.Generic;
 
-public class GameBehaviourCollection
+namespace TowerDefence3d.Scripts.Setup
 {
-    private List<GameBehaviour> _behaviours = new List<GameBehaviour>();
-
-    public bool IsEmpty => _behaviours.Count == 0;
-
-    public void Add(GameBehaviour behaviour)
+    public class GameBehaviourCollection
     {
-        _behaviours.Add(behaviour);
-    }
+        private List<GameBehaviour> _behaviours = new List<GameBehaviour>();
 
-    public void GameUpdate()
-    {
-        for (int i = 0; i < _behaviours.Count; i++)
+        public bool IsEmpty => _behaviours.Count == 0;
+
+        public void Add(GameBehaviour behaviour)
         {
-            if (!_behaviours[i].GameUpdate())
+            _behaviours.Add(behaviour);
+        }
+
+        public void GameUpdate()
+        {
+            for (int i = 0; i < _behaviours.Count; i++)
             {
-                int lastIndex = _behaviours.Count - 1;
-                _behaviours[i] = _behaviours[lastIndex];
-                _behaviours.RemoveAt(lastIndex);
-                i -= 1;
+                if (!_behaviours[i].GameUpdate())
+                {
+                    int lastIndex = _behaviours.Count - 1;
+                    _behaviours[i] = _behaviours[lastIndex];
+                    _behaviours.RemoveAt(lastIndex);
+                    i -= 1;
+                }
             }
         }
-    }
 
-    public void Clear()
-    {
-        for (int i = 0; i < _behaviours.Count; i++)
+        public void Clear()
         {
-            _behaviours[i].Recycle();
+            for (int i = 0; i < _behaviours.Count; i++)
+            {
+                _behaviours[i].Recycle();
+            }
+            _behaviours.Clear();
         }
-        _behaviours.Clear();
     }
 }

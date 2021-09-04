@@ -1,7 +1,10 @@
-﻿public enum DirectionChange
+﻿namespace TowerDefence3d.Scripts.MapObject
 {
-    None,
-    TurnRight,
-    TurnLeft,
-    TurnAround
+    public enum DirectionChange
+    {
+        None,
+        TurnRight,
+        TurnLeft,
+        TurnAround
+    }
 }

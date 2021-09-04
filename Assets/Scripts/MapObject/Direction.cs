@@ -1,7 +1,10 @@
-﻿public enum Direction
+﻿namespace TowerDefence3d.Scripts.MapObject
 {
-    North,
-    East,
-    South,
-    West
+    public enum Direction
+    {
+        North,
+        East,
+        South,
+        West
+    }
 }

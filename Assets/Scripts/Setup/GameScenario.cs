@@ -1,40 +1,43 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
-public class GameScenario : ScriptableObject
+namespace TowerDefence3d.Scripts.Setup
 {
-    [SerializeField]
-    private EnemyWave[] _waves;
-    public State Begin() => new State(this);
 
-    public struct State
+    [CreateAssetMenu]
+    public class GameScenario : ScriptableObject
     {
-        private GameScenario _scenario;
-        private int _index;
-        private EnemyWave.State _wave; 
+        [SerializeField]
+        private EnemyWave[] _waves;
+        public State Begin() => new State(this);
 
-        public State(GameScenario scenario)
+        public struct State
         {
-            _scenario = scenario;
-            _index = 0;
-            _wave = scenario._waves[0].Begin();
-        }
+            private GameScenario _scenario;
+            private int _index;
+            private EnemyWave.State _wave;
 
-        public bool Progress()
-        {
-            float deltaTime = _wave.Progress(Time.deltaTime);
-            while (deltaTime >= 0)
+            public State(GameScenario scenario)
             {
-                if (++_index >= _scenario._waves.Length)
-                {
-                    return false;
-                }
-                _wave = _scenario._waves[_index].Begin();
-                deltaTime = _wave.Progress(deltaTime);
+                _scenario = scenario;
+                _index = 0;
+                _wave = scenario._waves[0].Begin();
             }
 
-            return true;
+            public bool Progress()
+            {
+                float deltaTime = _wave.Progress(Time.deltaTime);
+                while (deltaTime >= 0)
+                {
+                    if (++_index >= _scenario._waves.Length)
+                    {
+                        return false;
+                    }
+                    _wave = _scenario._waves[_index].Begin();
+                    deltaTime = _wave.Progress(deltaTime);
+                }
+
+                return true;
+            }
         }
     }
 }
-

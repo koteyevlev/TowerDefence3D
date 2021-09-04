@@ -1,73 +1,56 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using TowerDefence3d.Scripts.MapObject;
+using TowerDefence3d.Scripts.Towers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu]
-public class GameTileContentFactory : GameObjectFactory
+namespace TowerDefence3d.Scripts.Setup
 {
-    [SerializeField]
-    private GameTileContent _destinationPrefab;
-    [SerializeField]
-    private GameTileContent _emptyPrefab;
-    [SerializeField]
-    private GameTileContent _wallPrefab;
-    [SerializeField]
-    private GameTileContent _spawnPrefab;
-    [SerializeField]
-    private Tower[] _towerPrefabs;
-    public void Reclaim(GameTileContent content)
+    [CreateAssetMenu]
+    public class GameTileContentFactory : GameObjectFactory
     {
-        Destroy(content.gameObject); 
-    }
-
-    public GameTileContent Get(GameTileContentType type)
-    {
-        switch(type)
+        [SerializeField]
+        private GameTileContent _destinationPrefab;
+        [SerializeField]
+        private GameTileContent _emptyPrefab;
+        [SerializeField]
+        private GameTileContent _wallPrefab;
+        [SerializeField]
+        private GameTileContent _spawnPrefab;
+        [SerializeField]
+        private Tower[] _towerPrefabs;
+        public void Reclaim(GameTileContent content)
         {
-            case GameTileContentType.Empty:
-                return Get(_emptyPrefab);
-            case GameTileContentType.Destination:
-                return Get(_destinationPrefab);
-            case GameTileContentType.Wall:
-                return Get(_wallPrefab);
-            case GameTileContentType.SpawnPoint:
-                return Get(_spawnPrefab);
+            Destroy(content.gameObject);
         }
-        return null;
-    }
 
-    public Tower Get(TowerType type)
-    {
-        Tower tower = _towerPrefabs[(int)type];
-        return Get(tower);
-    }
-    private T Get<T>(T prefab) where T : GameTileContent
-    {
-        T instance = CreateGameObjectInstance(prefab);
-        instance.OriginFactory = this;
-        return instance;
-    }
+        public GameTileContent Get(GameTileContentType type)
+        {
+            switch (type)
+            {
+                case GameTileContentType.Empty:
+                    return Get(_emptyPrefab);
+                case GameTileContentType.Destination:
+                    return Get(_destinationPrefab);
+                case GameTileContentType.Wall:
+                    return Get(_wallPrefab);
+                case GameTileContentType.SpawnPoint:
+                    return Get(_spawnPrefab);
+            }
+            return null;
+        }
 
-    private Scene _contentScene;
-    //private void MoveToFactoryScene(GameObject o)
-    //{
-    //    if(!_contentScene.isLoaded)
-    //    {
-    //        if (Application.isEditor)
-    //        {
-    //            _contentScene = SceneManager.GetSceneByName(name);
-    //            if (!_contentScene.isLoaded)
-    //            {
-    //                _contentScene = SceneManager.CreateScene(name);
-    //            }
-    //        }
-    //        else
-    //        {
-    //            _contentScene = SceneManager.CreateScene(name);
-    //        }
-    //    }
-    //    SceneManager.MoveGameObjectToScene(o, _contentScene);
-    //}
+        public Tower Get(TowerType type)
+        {
+            Tower tower = _towerPrefabs[(int)type];
+            return Get(tower);
+        }
+        private T Get<T>(T prefab) where T : GameTileContent
+        {
+            T instance = CreateGameObjectInstance(prefab);
+            instance.OriginFactory = this;
+            return instance;
+        }
+
+        private Scene _contentScene;
+    }
 }

@@ -1,40 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using TowerDefence3d.Scripts.Setup;
 using UnityEngine;
 
-[SelectionBase]
-public class GameTileContent : MonoBehaviour
+namespace TowerDefence3d.Scripts.MapObject
 {
-    [SerializeField]
-    private GameTileContentType _type;
-
-    public GameTileContentType Type => _type;
-
-    public GameTileContentFactory OriginFactory { get; set; }
-    public bool IsBlockingPath => Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;
-
-    public void Recycle()
+    [SelectionBase]
+    public class GameTileContent : MonoBehaviour
     {
-        OriginFactory.Reclaim(this);
+        [SerializeField]
+        private GameTileContentType _type;
+
+        public GameTileContentType Type => _type;
+
+        public GameTileContentFactory OriginFactory { get; set; }
+        public bool IsBlockingPath => Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;
+
+        public void Recycle()
+        {
+            OriginFactory.Reclaim(this);
+        }
+
+        public virtual void GameUpdate()
+        {
+
+        }
     }
 
-    public virtual void GameUpdate()
+    public enum GameTileContentType
     {
-
+        Empty,
+        Destination,
+        Wall,
+        SpawnPoint,
+        Tower
     }
-}
-
-public enum GameTileContentType
-{
-    Empty,
-    Destination, 
-    Wall,
-    SpawnPoint,
-    Tower
-}
-
-public enum TowerType
-{
-    Laser,
-    Mortar
 }

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e12ecfb5d65d29a47b0d1d57df542e27, type: 3}
-  m_Name: EnemyFacrory
+  m_Script: {fileID: 11500000, guid: a4c425a872fa40b4c9c6723f9495d2c6, type: 3}
+  m_Name: EnemyFactory
   m_EditorClassIdentifier: 
   _chomper:
     Prefab: {fileID: 1256062561841255596, guid: 5378f98f0aa050842a36e5576ac2e8ef, type: 3}
@@ -21,25 +21,25 @@ MonoBehaviour:
       _min: 0
       _max: 0
     Speed:
-      _min: 2.3067808
-      _max: 3.1295686
+      _min: 1
+      _max: 1
     Health:
       _min: 100
       _max: 100
   _ellen:
     Prefab: {fileID: 9121568671495264667, guid: 189bc1f83fd50984587097cbe0751d2d, type: 3}
     Scale:
-      _min: 1.2375222
-      _max: 1.2375222
+      _min: 1
+      _max: 1
     PathOffset:
       _min: 0
-      _max: 0.19359718
+      _max: 0
     Speed:
-      _min: 2.4632726
-      _max: 2.4632726
+      _min: 1
+      _max: 1
     Health:
-      _min: 436.8705
-      _max: 436.8705
+      _min: 100
+      _max: 100
   _golem:
     Prefab: {fileID: 4855582417177342594, guid: 22982f4aeaf54b04b8e6667e8638ad1a, type: 3}
     Scale:
@@ -52,5 +52,5 @@ MonoBehaviour:
       _min: 1
       _max: 1
     Health:
-      _min: 876.0941
-      _max: 876.0941
+      _min: 100
+      _max: 100

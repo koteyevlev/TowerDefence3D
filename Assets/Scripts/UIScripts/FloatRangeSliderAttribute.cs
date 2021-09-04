@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-public class FloatRangeSliderAttribute: PropertyAttribute
+namespace TowerDefence3d.Scripts.UIScripts
 {
-    public float Min { get; private set; }
-    public float Max { get; private set; }
-
-    public FloatRangeSliderAttribute(float min, float max)
+    public class FloatRangeSliderAttribute : PropertyAttribute
     {
-        Min = min;
-        Max = min > max ? min: max;
+        public float Min { get; private set; }
+        public float Max { get; private set; }
+
+        public FloatRangeSliderAttribute(float min, float max)
+        {
+            Min = min;
+            Max = min > max ? min : max;
+        }
     }
 }
