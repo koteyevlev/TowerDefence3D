@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TowerDefence3d.Scripts.Enemies;
 using TowerDefence3d.Scripts.MapObject;
@@ -32,6 +33,8 @@ namespace TowerDefence3d.Scripts.Setup
         [SerializeField, Range(1f, 2f)]
         private float _prepareTime;
 
+        public static int CurrentHealth => _instance._currentPlayerhealth;
+
         private bool _scenarioInProcess;
         private int _currentPlayerhealth;
         private bool _isPaused;
@@ -49,6 +52,7 @@ namespace TowerDefence3d.Scripts.Setup
         private void OnEnable()
         {
             _instance = this;
+            _currentPlayerhealth = _startingPlayerHealth;
         }
 
         private void Start()
@@ -103,7 +107,7 @@ namespace TowerDefence3d.Scripts.Setup
 
         public static void SpawnEnemy(EnemyFactory factory, EnemyType type)
         {
-            GameTile spawnPoint = _instance._board.GetSpawnPoint(Random.Range(0, _instance._board.SpownPointsCount));
+            GameTile spawnPoint = _instance._board.GetSpawnPoint(UnityEngine.Random.Range(0, _instance._board.SpownPointsCount));
             Enemy enemy = factory.Get(type);
             enemy.SpawnOn(spawnPoint);
             _instance._enemies.Add(enemy);
@@ -179,9 +183,18 @@ namespace TowerDefence3d.Scripts.Setup
             Time.timeScale = _isPaused ? 0f : 1f;
         }
 
+        public event EventHandler EnemyReachedBase;
+
+        protected virtual void OnEnemyReachedBase(EventArgs e)
+        {
+            EventHandler handler = EnemyReachedBase;
+            handler?.Invoke(this, e);
+        }
+
         public static void EnemyReachedDestination()
         {
             _instance._currentPlayerhealth--;
+            _instance.OnEnemyReachedBase(EventArgs.Empty);
         }
 
         private Coroutine _prepareRoutine;
