@@ -29,7 +29,7 @@ namespace TowerDefence3d.Scripts.Setup
         [SerializeField, Range(10, 100)]
         private int _startingPlayerHealth;
 
-        [SerializeField, Range(10f, 50f)]
+        [SerializeField, Range(1f, 2f)]
         private float _prepareTime;
 
         private bool _scenarioInProcess;
@@ -58,11 +58,6 @@ namespace TowerDefence3d.Scripts.Setup
         }
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _isPaused = !_isPaused;
-                Time.timeScale = _isPaused ? 0f : 1f;
-            }
             if (Input.GetKeyDown(KeyCode.R))
             {
                 BeginNewGame();
@@ -171,7 +166,17 @@ namespace TowerDefence3d.Scripts.Setup
             _nonEnemies.Clear();
             _board.Clear();
             _currentPlayerhealth = _startingPlayerHealth;
+        }
+
+        public void OnStartWaveButtonClicked()
+        {
             _prepareRoutine = StartCoroutine(PrepareRoutine());
+        }
+
+        public void OnPausedClicked()
+        {
+            _isPaused = !_isPaused;
+            Time.timeScale = _isPaused ? 0f : 1f;
         }
 
         public static void EnemyReachedDestination()
