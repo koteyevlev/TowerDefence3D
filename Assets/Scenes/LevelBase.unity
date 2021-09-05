@@ -5102,6 +5102,7 @@ GameObject:
   - component: {fileID: 3806775725435767570}
   - component: {fileID: 3808429082141081392}
   - component: {fileID: 3807266104563100286}
+  - component: {fileID: 4020345653764923381}
   m_Layer: 5
   m_Name: PlayerBaseLife
   m_TagString: Untagged
@@ -5109,6 +5110,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4020345653764923381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020345653764923380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548761872b989c04cb4b8d31467acc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  display: {fileID: 3915855956072184294}
 --- !u!1 &4020482273147293438
 GameObject:
   m_ObjectHideFlags: 0
