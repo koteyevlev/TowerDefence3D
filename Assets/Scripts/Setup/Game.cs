@@ -52,6 +52,7 @@ namespace TowerDefence3d.Scripts.Setup
         public event EventHandler EnemyReachedBase;
         public event EventHandler LevelComplete;
         public event EventHandler LevelDefeat;
+        public event EventHandler NewGame;
 
         private void OnEnemyReachedBase(EventArgs e)
         {
@@ -66,6 +67,11 @@ namespace TowerDefence3d.Scripts.Setup
         private void OnLevelDefeat(EventArgs e)
         {
             EventHandler handler = LevelDefeat;
+            handler?.Invoke(this, e);
+        }
+        private void OnNewGame(EventArgs e)
+        {
+            EventHandler handler = NewGame;
             handler?.Invoke(this, e);
         }
 
@@ -192,6 +198,7 @@ namespace TowerDefence3d.Scripts.Setup
             _nonEnemies.Clear();
             _board.Clear();
             _currentPlayerhealth = _startingPlayerHealth;
+            OnNewGame(EventArgs.Empty);
         }
 
         public void OnStartWaveButtonClicked()

@@ -82,8 +82,8 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void GoToMainMenu()
 		{
-			SafelyUnsubscribe();
 			SceneManager.LoadScene(menuSceneName);
+			SafelyUnsubscribe();
 		}
 
 		/// <summary>
@@ -92,8 +92,8 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void RestartLevel()
 		{
-			SafelyUnsubscribe();
 			Game._instance.BeginNewGame();
+			SafelyUnsubscribe();
 			Start();
 		}
 
@@ -179,8 +179,8 @@ namespace TowerDefence3d.Scripts.UIObjects
 		protected void SafelyUnsubscribe()
 		{
 			LazyLoad();
-			_gameInstance.LevelComplete -= Victory;
-			_gameInstance.LevelDefeat -= Defeat;
+			Game._instance.LevelComplete -= Victory;
+			Game._instance.LevelDefeat -= Defeat;
 		}
 
 		/// <summary>

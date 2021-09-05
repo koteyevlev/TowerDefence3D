@@ -25,16 +25,23 @@ namespace TowerDefence3d.Scripts.UIObjects
 		{
 			_currentHealth = Game.CurrentHealth;
 			Game._instance.EnemyReachedBase += OnBaseDamaged;
+			Game._instance.NewGame += OnNewGame;
 			UpdateDisplay();
 		}
 
-		/// <summary>
-		/// Subscribes to the player base health died event
-		/// </summary>
-		/// <param name="info">
-		/// The associated health change information
-		/// </param>
-		protected virtual void OnBaseDamaged(object sender, EventArgs e)
+        private void OnNewGame(object sender, EventArgs e)
+        {
+			_currentHealth = Game.CurrentHealth;
+			UpdateDisplay();
+		}
+
+        /// <summary>
+        /// Subscribes to the player base health died event
+        /// </summary>
+        /// <param name="info">
+        /// The associated health change information
+        /// </param>
+        protected virtual void OnBaseDamaged(object sender, EventArgs e)
 		{
 			UpdateDisplay();
 		}
