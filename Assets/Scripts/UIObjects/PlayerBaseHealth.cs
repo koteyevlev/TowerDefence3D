@@ -44,8 +44,8 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected void UpdateDisplay()
 		{
-			_currentHealth -= 1;
 			display.text = _currentHealth.ToString();
+			_currentHealth -= 1;
 		}
 	}
 }

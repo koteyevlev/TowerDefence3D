@@ -229,8 +229,8 @@ namespace TowerDefence3d.Scripts.Setup
             }
             _spawnPoints.Clear();
             _contetToUpdate.Clear();
-            ToggleDestination(_tiles[_tiles.Length / 2]);
-            ToggleSpawnPoint(_tiles[0]);
+            ToggleDestination(_tiles[0]);
+            ToggleSpawnPoint(_tiles[_tiles.Length - 1]);
         }
     }
 }

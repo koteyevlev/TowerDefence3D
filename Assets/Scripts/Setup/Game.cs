@@ -49,6 +49,26 @@ namespace TowerDefence3d.Scripts.Setup
 
         public static Game _instance;
 
+        public event EventHandler EnemyReachedBase;
+        public event EventHandler LevelComplete;
+        public event EventHandler LevelDefeat;
+
+        private void OnEnemyReachedBase(EventArgs e)
+        {
+            EventHandler handler = EnemyReachedBase;
+            handler?.Invoke(this, e);
+        }
+        private void OnLevelComplete(EventArgs e)
+        {
+            EventHandler handler = LevelComplete;
+            handler?.Invoke(this, e);
+        }
+        private void OnLevelDefeat(EventArgs e)
+        {
+            EventHandler handler = LevelDefeat;
+            handler?.Invoke(this, e);
+        }
+
         private void OnEnable()
         {
             _instance = this;
@@ -89,11 +109,13 @@ namespace TowerDefence3d.Scripts.Setup
                 if (_currentPlayerhealth <= 0)
                 {
                     Debug.Log("defeated");
+                    OnLevelDefeat(EventArgs.Empty);
                     BeginNewGame();
                 }
                 if (!_activeScenario.Progress() && _enemies.IsEmpty)
                 {
                     Debug.Log("Win");
+                    OnLevelComplete(EventArgs.Empty);
                     BeginNewGame();
                     _activeScenario.Progress();
                 }
@@ -181,14 +203,6 @@ namespace TowerDefence3d.Scripts.Setup
         {
             _isPaused = !_isPaused;
             Time.timeScale = _isPaused ? 0f : 1f;
-        }
-
-        public event EventHandler EnemyReachedBase;
-
-        protected virtual void OnEnemyReachedBase(EventArgs e)
-        {
-            EventHandler handler = EnemyReachedBase;
-            handler?.Invoke(this, e);
         }
 
         public static void EnemyReachedDestination()
