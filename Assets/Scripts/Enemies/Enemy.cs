@@ -1,4 +1,5 @@
-﻿using TowerDefence3d.Scripts.MapObject;
+﻿using System;
+using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.Setup;
 using TowerDefence3d.Scripts.Towers;
 using UnityEngine;
@@ -19,11 +20,20 @@ namespace TowerDefence3d.Scripts.Enemies
         private GameTile _tileFrom, _tileTo;
         private Vector3 _positionFrom, _positionTo;
         private float _progress, _progressFactor;
+        private float _firstHealth;
 
         private Direction _direction;
         private DirectionChange _directionChange;
         private float _directionAngleFrom, _directionAngleTo;
         private float _pathOffset, _speed;
+
+        public event EventHandler<GetDamageEventArgs> GetDamage;
+
+        public void OnEnemyGetDamage(GetDamageEventArgs e)
+        {
+            EventHandler<GetDamageEventArgs> handler = GetDamage;
+            handler?.Invoke(this, e);
+        }
 
 
 
@@ -34,6 +44,7 @@ namespace TowerDefence3d.Scripts.Enemies
             _speed = speed;
             Scale = scale;
             Health = health;
+            _firstHealth = health;
             _enemyView.Init(this);
         }
         public void SpawnOn(GameTile spawnPoint)
@@ -48,7 +59,19 @@ namespace TowerDefence3d.Scripts.Enemies
         public void TakeDamage(float damage)
         {
             Health -= damage;
+            OnEnemyGetDamage(new GetDamageEventArgs 
+            { 
+                Damage = damage,
+                HealthRemainedInProcent = Health / _firstHealth,
+            });
         }
+
+        public class GetDamageEventArgs : EventArgs
+        {
+            public float Damage { get; set; }
+            public float HealthRemainedInProcent { get; set; }
+        }
+
 
         private void PrepareIntro()
         {
