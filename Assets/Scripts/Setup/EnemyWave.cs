@@ -16,17 +16,27 @@ namespace TowerDefence3d.Scripts.Setup
             private EnemyWave _wave;
             private int _index;
             private EnemySpawnSequence.State _sequence;
+            private readonly int _totalAmount;
+            private int _spawned;
 
             public State(EnemyWave wave)
             {
                 _wave = wave;
                 _index = 0;
                 _sequence = _wave._spawnSequences[0].Begin();
+                _totalAmount = 0;
+                _spawned = 0;
+                foreach (var seq in _wave._spawnSequences)
+                {
+                    _totalAmount += seq._amount;
+                }
             }
 
-            public float Progress(float deltaTime)
+            public float Progress(float deltaTime, out float progressWave)
             {
-                deltaTime = _sequence.Progress(deltaTime);
+                deltaTime = _sequence.Progress(deltaTime, out int spawned);
+                _spawned += spawned;
+                progressWave = _spawned / _totalAmount;
                 while (deltaTime >= 0)
                 {
                     if (++_index >= _wave._spawnSequences.Length)
@@ -35,7 +45,8 @@ namespace TowerDefence3d.Scripts.Setup
                     }
 
                     _sequence = _wave._spawnSequences[_index].Begin();
-                    deltaTime = _sequence.Progress(deltaTime);
+                    deltaTime = _sequence.Progress(deltaTime, out spawned);
+                    _spawned += spawned;
                 }
 
                 return -1f;

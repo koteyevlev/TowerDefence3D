@@ -15,14 +15,14 @@ MonoBehaviour:
   _chomper:
     Prefab: {fileID: 1256062561841255596, guid: 5378f98f0aa050842a36e5576ac2e8ef, type: 3}
     Scale:
-      _min: 1
-      _max: 1
+      _min: 0.688017
+      _max: 0.8440085
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 1
-      _max: 1
+      _min: 1.5445521
+      _max: 2.0891042
     Health:
       _min: 100
       _max: 100
@@ -30,27 +30,27 @@ MonoBehaviour:
     Prefab: {fileID: 9121568671495264667, guid: 189bc1f83fd50984587097cbe0751d2d, type: 3}
     Scale:
       _min: 1
-      _max: 1
+      _max: 1.5388796
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 1
-      _max: 1
+      _min: 1.1815174
+      _max: 1.363035
     Health:
-      _min: 100
-      _max: 100
+      _min: 371.4252
+      _max: 502.45804
   _golem:
     Prefab: {fileID: 4855582417177342594, guid: 22982f4aeaf54b04b8e6667e8638ad1a, type: 3}
     Scale:
-      _min: 1
-      _max: 1
+      _min: 1.5105176
+      _max: 1.8650436
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 1
-      _max: 1
+      _min: 0.7445521
+      _max: 1.1815174
     Health:
-      _min: 100
-      _max: 100
+      _min: 614.7719
+      _max: 801.96173

@@ -12,7 +12,7 @@ namespace TowerDefence3d.Scripts.Setup
         [SerializeField]
         private EnemyType _type;
         [SerializeField, Range(1, 100)]
-        private int _amount = 10;
+        internal int _amount = 10;
         [SerializeField, Range(0.1f, 10f)]
         private float _cooldown = 1f;
 
@@ -29,9 +29,10 @@ namespace TowerDefence3d.Scripts.Setup
                 _cooldown = sequence._cooldown;
             }
 
-            public float Progress(float deltaTime)
+            public float Progress(float deltaTime, out int spawned)
             {
                 _cooldown += deltaTime;
+                spawned = 0;
                 while (_cooldown >= _sequence?._cooldown)
                 {
                     _cooldown -= _sequence._cooldown;
@@ -42,6 +43,8 @@ namespace TowerDefence3d.Scripts.Setup
 
                     _count++;
                     Game.SpawnEnemy(_sequence._factory, _sequence._type);
+                    spawned += 1;
+
                 }
 
                 return -1f;
