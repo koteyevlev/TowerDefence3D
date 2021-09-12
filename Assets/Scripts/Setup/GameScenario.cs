@@ -8,10 +8,6 @@ namespace TowerDefence3d.Scripts.Setup
     {
         [SerializeField]
         private EnemyWave[] _waves;
-
-        public int? WavesCount => _waves?.Length ?? 0;
-        public int CurrentWave { get; private set; }
-        public float WaveProgress { get; private set; }
         public State Begin() => new State(this);
 
         public struct State
@@ -20,13 +16,18 @@ namespace TowerDefence3d.Scripts.Setup
             private int _index;
             private EnemyWave.State _wave;
 
+
+            public int? WavesCount => _scenario?._waves?.Length ?? 0;
+            public int CurrentWave { get; private set; }
+            public float WaveProgress { get; private set; }
+
             public State(GameScenario scenario)
             {
                 _scenario = scenario;
                 _index = 0;
                 _wave = scenario._waves[0].Begin();
-                scenario.CurrentWave = _index + 1;
-                scenario.WaveProgress = 0;
+                CurrentWave = _index + 1;
+                WaveProgress = 0;
             }
 
             public bool Progress()
@@ -38,12 +39,12 @@ namespace TowerDefence3d.Scripts.Setup
                     {
                         return false;
                     }
-                    _scenario.CurrentWave = _index + 1;
+                    CurrentWave = _index + 1;
                     _wave = _scenario._waves[_index].Begin();
                     deltaTime = _wave.Progress(deltaTime, out progressWave);
                 }
-                _scenario.WaveProgress = progressWave;
-                Debug.Log($"progress wave {_scenario.WaveProgress}, curr wave - {_scenario.CurrentWave}");
+                WaveProgress = progressWave;
+                Debug.Log($"progress wave {WaveProgress}, curr wave - {CurrentWave}");
                 return true;
             }
         }

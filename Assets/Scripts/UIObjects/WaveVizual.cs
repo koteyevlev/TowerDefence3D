@@ -5,20 +5,24 @@ using TowerDefence3d.Scripts.Enemies;
 using TowerDefence3d.Scripts.Setup;
 using UnityEngine;
 using UnityEngine.UI;
-using static TowerDefence3d.Scripts.Enemies.Enemy;
 
 public class WaveVizual : MonoBehaviour
 {
     [SerializeField]
     private Image _image;
-    // Start is called before the first frame update
-    void Start()
-    {
-        GetComponentInParent<Enemy>().GetDamage += HealthChanged;
-    }
 
-    private void HealthChanged(object sender, GetDamageEventArgs healthRemained)
+    [SerializeField]
+    private Text _text;
+
+    private int cachedCurrentWave = 0;
+
+    internal void GameUpdate(GameScenario.State activeScenario)
     {
-        _image.fillAmount = healthRemained.HealthRemainedInProcent;
+        _image.fillAmount = activeScenario.WaveProgress;
+        if (activeScenario.CurrentWave != cachedCurrentWave)
+        {
+            cachedCurrentWave = activeScenario.CurrentWave;
+            _text.text = activeScenario.CurrentWave.ToString() + "/" + activeScenario.WavesCount.ToString();
+        }
     }
 }

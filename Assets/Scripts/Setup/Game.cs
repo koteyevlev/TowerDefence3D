@@ -19,6 +19,9 @@ namespace TowerDefence3d.Scripts.Setup
         private Camera _camera;
 
         [SerializeField]
+        private WaveVizual _waveVizual;
+
+        [SerializeField]
         private GameTileContentFactory _contentFactory;
 
         [SerializeField]
@@ -84,13 +87,13 @@ namespace TowerDefence3d.Scripts.Setup
         private void Start()
         {
             _board.Initialize(_boardSize, _contentFactory);
-            BeginNewGame();
+            StopGame();
         }
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                BeginNewGame();
+                StopGame();
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -116,17 +119,18 @@ namespace TowerDefence3d.Scripts.Setup
                 {
                     Debug.Log("defeated");
                     OnLevelDefeat(EventArgs.Empty);
-                    BeginNewGame();
+                    StopGame();
                 }
                 if (!_activeScenario.Progress() && _enemies.IsEmpty)
                 {
                     Debug.Log("Win");
                     OnLevelComplete(EventArgs.Empty);
-                    BeginNewGame();
+                    StopGame();
                     _activeScenario.Progress();
                 }
             }
 
+            _waveVizual.GameUpdate(_activeScenario);
             _enemies.GameUpdate();
             Physics.SyncTransforms();
             _board.GameUpdate();
@@ -187,7 +191,7 @@ namespace TowerDefence3d.Scripts.Setup
             return explosion;
         }
 
-        public void BeginNewGame()
+        public void StopGame()
         {
             _scenarioInProcess = false;
             if (_prepareRoutine != null)

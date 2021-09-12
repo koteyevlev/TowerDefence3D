@@ -17,7 +17,7 @@ namespace TowerDefence3d.Scripts.Setup
             private int _index;
             private EnemySpawnSequence.State _sequence;
             private readonly int _totalAmount;
-            private int _spawned;
+            private float _spawned;
 
             public State(EnemyWave wave)
             {

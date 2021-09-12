@@ -606,6 +606,7 @@ MonoBehaviour:
   _boardSize: {x: 7, y: 7}
   _board: {fileID: 664391282}
   _camera: {fileID: 963194227}
+  _waveVizual: {fileID: 4020359261943107944}
   _contentFactory: {fileID: 11400000, guid: f68a98421273a3e41aae71f2ab226871, type: 2}
   _warFactory: {fileID: 11400000, guid: c22f220331bf3064a83541e8cd6f8805, type: 2}
   _scenario: {fileID: 11400000, guid: b346e0219ff99c94bb10c1197cb93cf5, type: 2}
@@ -5544,7 +5545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603781431be9bc34bbc0e20a4bdffa58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _image: {fileID: 3916662232929302125}
+  _image: {fileID: 3916033970061925633}
+  _text: {fileID: 3916287599211393981}
 --- !u!1 &4020369134470335645
 GameObject:
   m_ObjectHideFlags: 0

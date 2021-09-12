@@ -92,7 +92,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void RestartLevel()
 		{
-			Game._instance.BeginNewGame();
+			Game._instance.StopGame();
 			SafelyUnsubscribe();
 			Start();
 		}
