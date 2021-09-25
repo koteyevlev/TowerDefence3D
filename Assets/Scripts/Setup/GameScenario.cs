@@ -44,7 +44,7 @@ namespace TowerDefence3d.Scripts.Setup
                     deltaTime = _wave.Progress(deltaTime, out progressWave);
                 }
                 WaveProgress = progressWave;
-                Debug.Log($"progress wave {WaveProgress}, curr wave - {CurrentWave}");
+                // Debug.Log($"progress wave {WaveProgress}, curr wave - {CurrentWave}");
                 return true;
             }
         }
