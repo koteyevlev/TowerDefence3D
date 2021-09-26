@@ -35,8 +35,11 @@ namespace TowerDefence3d.Scripts.Setup
 
         [SerializeField, Range(1f, 2f)]
         private float _prepareTime;
+        [SerializeField, Range(10f, 50f)]
+        private float _firstCurrency = 10f;
 
         public static int CurrentHealth => _instance._currentPlayerhealth;
+        public Currency Currency = new Currency();
 
         private bool _scenarioInProcess;
         private int _currentPlayerhealth;
@@ -87,6 +90,7 @@ namespace TowerDefence3d.Scripts.Setup
         private void Start()
         {
             _board.Initialize(_boardSize, _contentFactory);
+            Currency.SetCurrency(_firstCurrency);
             StopGame();
         }
         private void Update()

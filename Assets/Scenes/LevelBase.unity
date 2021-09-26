@@ -612,6 +612,7 @@ MonoBehaviour:
   _scenario: {fileID: 11400000, guid: b346e0219ff99c94bb10c1197cb93cf5, type: 2}
   _startingPlayerHealth: 10
   _prepareTime: 1
+  _firstCurrency: 20
 --- !u!4 &1534185322
 Transform:
   m_ObjectHideFlags: 0
@@ -4425,20 +4426,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
---- !u!114 &3915859676470052948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4020076975359768384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5325b61d803c4d32a3d2a449cff892d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  display: {fileID: 3915783092521732388}
-  currencySymbol: 'Energy:'
 --- !u!114 &3915872819809359278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4673,7 +4660,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 10/10
+  m_Text: 
 --- !u!114 &3916355862308067882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5359,14 +5346,28 @@ GameObject:
   m_Component:
   - component: {fileID: 3806273036513307864}
   - component: {fileID: 3808765168700727724}
-  - component: {fileID: 3915859676470052948}
+  - component: {fileID: 4020076975359768385}
   m_Layer: 5
   m_Name: CurrencyContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
+--- !u!114 &4020076975359768385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020076975359768384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58f46bee8a18854abe2c10cbbb09517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  display: {fileID: 3915783092521732388}
+  currencySymbol: 'Energy:'
 --- !u!1 &4020129815290220644
 GameObject:
   m_ObjectHideFlags: 0
@@ -8557,12 +8558,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8bd743d0884be142b4e471ed4db962d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonText: {fileID: 0}
-  towerIcon: {fileID: 0}
-  buyButton: {fileID: 0}
-  energyIcon: {fileID: 0}
-  energyDefaultColor: {r: 0, g: 0, b: 0, a: 0}
-  energyInvalidColor: {r: 0, g: 0, b: 0, a: 0}
+  buttonText: {fileID: 6414986548521424498}
+  m_Tower: {fileID: 8902008406104975686, guid: ecfac9c92ba4c5c4180c95aa1ea4be7a, type: 3}
+  buyButton: {fileID: 6415255791499159318}
+  energyIcon: {fileID: 6414317405724034734}
 --- !u!1 &6383634284616791018
 GameObject:
   m_ObjectHideFlags: 0

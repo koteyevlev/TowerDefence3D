@@ -1,5 +1,4 @@
 using System;
-using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.Setup;
 using TowerDefence3d.Scripts.Towers;
 using UnityEngine;
@@ -18,6 +17,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// The text attached to the button
 		/// </summary>
 		
+		[SerializeField]
 		private Text buttonText;
 
 
@@ -30,8 +30,9 @@ namespace TowerDefence3d.Scripts.UIObjects
 
 		private Image towerIcon;
 
+		[SerializeField]
 		private Button buyButton;
-
+		[SerializeField]
 		private Image energyIcon;
 
 		private Color energyDefaultColor;
@@ -81,29 +82,22 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// <param name="towerData">
 		/// The tower to initialize the button with
 		/// </param>
-		public void OnStart()
+		void Start()
 		{
-			if (towerData.levels.Length > 0)
-			{
-				TowerLevel firstTower = towerData.levels[0];
-				buttonText.text = firstTower.cost.ToString();
-				towerIcon.sprite = firstTower.levelData.icon;
-			}
-			else
-			{
-				Debug.LogWarning("[Tower Spawn Button] No level data for tower");
-			}
+			//if (towerData.levels.Length > 0)
+			//{
+			//	TowerLevel firstTower = towerData.levels[0];
+			buttonText.text = m_Tower.PurchaseCost.ToString();
+								//	towerIcon.sprite = firstTower.levelData.icon;
+								//}
+								//else
+								//{
+								//	Debug.LogWarning("[Tower Spawn Button] No level data for tower");
+								//}
 
-			if (LevelManager.instanceExists)
-			{
-				m_Currency = LevelManager.instance.currency;
-				m_Currency.currencyChanged += UpdateButton;
-			}
-			else
-			{
-				Debug.LogWarning("[Tower Spawn Button] No level manager to get currency object");
-			}
-			UpdateButton();
+			m_Currency = Game._instance.Currency;
+			m_Currency.CurrencyChanged += UpdateButton;
+			UpdateButton(null, null);
 		}
 
 		/// <summary>
@@ -121,7 +115,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		{
 			if (m_Currency != null)
 			{
-				m_Currency.currencyChanged -= UpdateButton;
+				m_Currency.CurrencyChanged -= UpdateButton;
 			}
 		}
 
@@ -139,7 +133,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// <summary>
 		/// Update the button's button state based on cost
 		/// </summary>
-		void UpdateButton()
+		void UpdateButton(object sender, EventArgs e)
 		{
 			if (m_Currency == null)
 			{
@@ -147,12 +141,12 @@ namespace TowerDefence3d.Scripts.UIObjects
 			}
 
 			// Enable button
-			if (m_Currency.CanAfford(m_Tower.purchaseCost) && !buyButton.interactable)
+			if (m_Currency.CanAfford(m_Tower.PurchaseCost) && !buyButton.interactable)
 			{
 				buyButton.interactable = true;
 				energyIcon.color = energyDefaultColor;
 			}
-			else if (!m_Currency.CanAfford(m_Tower.purchaseCost) && buyButton.interactable)
+			else if (!m_Currency.CanAfford(m_Tower.PurchaseCost) && buyButton.interactable)
 			{
 				buyButton.interactable = false;
 				energyIcon.color = energyInvalidColor;

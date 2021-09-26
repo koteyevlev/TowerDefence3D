@@ -8,6 +8,10 @@ namespace TowerDefence3d.Scripts.Towers
         [SerializeField, Range(1.5f, 10.5f)]
         protected float _targetingRange = 1.5f;
 
+        [SerializeField, Range(1.5f, 10.5f)]
+        public float _purchaseCost = 1.5f;
+
+        public float PurchaseCost => _purchaseCost;
         private const int ENEMY_LAYER_MASK = 1 << 9;
 
         public abstract TowerType TowerType { get; }

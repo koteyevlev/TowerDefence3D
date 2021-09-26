@@ -305,6 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 4
   _targetingRange: 2.8
+  _purchaseCost: 5
   _turret: {fileID: 2317090304058942456}
   _laserBeam: {fileID: 3231633428867708269}
   _damagePerSecond: 30

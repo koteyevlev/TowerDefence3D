@@ -1990,6 +1990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 4
   _targetingRange: 3.8
+  _purchaseCost: 10
   _shootsPerSecond: 1
   _mortar: {fileID: 472644773045544176}
   _shellBlastRadius: 1.52
