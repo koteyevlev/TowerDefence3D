@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 
 namespace TowerDefence3d.Scripts.MapObject
 {
-    public class GameTile : MonoBehaviour
+    public class GameTile : MonoBehaviour, IDropHandler
     {
         [SerializeField]
         private Transform _arrow;
@@ -103,6 +103,11 @@ namespace TowerDefence3d.Scripts.MapObject
                 _nextOnPath == _south ? _southRotation :
                 _westRotation;
 
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            Debug.Log("OnDrop");
         }
     }
 }

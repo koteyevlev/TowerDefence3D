@@ -8560,6 +8560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonText: {fileID: 6414986548521424498}
   m_Tower: {fileID: 8902008406104975686, guid: ecfac9c92ba4c5c4180c95aa1ea4be7a, type: 3}
+  _factory: {fileID: 11400000, guid: f68a98421273a3e41aae71f2ab226871, type: 2}
   buyButton: {fileID: 6415255791499159318}
   energyIcon: {fileID: 6414317405724034734}
 --- !u!1 &6383634284616791018

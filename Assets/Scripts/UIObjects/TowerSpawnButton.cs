@@ -11,7 +11,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 	/// A button controller for spawning towers
 	/// </summary>
 	[RequireComponent(typeof(RectTransform))]
-	public class TowerSpawnButton : MonoBehaviour, IDragHandler
+	public class TowerSpawnButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
 	{
 		/// <summary>
 		/// The text attached to the button
@@ -28,6 +28,9 @@ namespace TowerDefence3d.Scripts.UIObjects
 		[SerializeField]
 		private Tower m_Tower;
 
+		[SerializeField]
+		private GameTileContentFactory _factory;
+
 		private Image towerIcon;
 
 		[SerializeField]
@@ -39,17 +42,8 @@ namespace TowerDefence3d.Scripts.UIObjects
 
 		private Color energyInvalidColor;
 
-		/// <summary>
-		/// Fires when the button is tapped
-		/// </summary>
-		private event Action<Tower> buttonTapped;
+		private Tower _draggedTower = null;
 
-		/// <summary>
-		/// Fires when the pointer is outside of the button bounds
-		/// and still down
-		/// </summary>
-		private event Action<Tower> draggedOff;
-		
 
 		/// <summary>
 		/// Cached reference to level currency
@@ -67,12 +61,10 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public virtual void OnDrag(PointerEventData eventData)
 		{
+			Debug.Log("OnDrag");
+			_draggedTower.transform.localPosition = Input.mousePosition;
 			if (!RectTransformUtility.RectangleContainsScreenPoint(m_RectTransform, eventData.position))
 			{
-				if (draggedOff != null)
-				{
-					draggedOff(m_Tower);
-				}
 			}
 		}
 
@@ -122,12 +114,12 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// <summary>
 		/// The click for when the button is tapped
 		/// </summary>
-		public void OnClick()
+		public void OnBeginDrag(PointerEventData eventData)
 		{
-			if (buttonTapped != null)
-			{
-				buttonTapped(m_Tower);
-			}
+			Debug.LogWarning("OnBeginDrag");
+			_draggedTower = _factory.Get(m_Tower.TowerType);
+			_draggedTower.transform.localPosition = Input.mousePosition;
+
 		}
 
 		/// <summary>
@@ -152,5 +144,12 @@ namespace TowerDefence3d.Scripts.UIObjects
 				energyIcon.color = energyInvalidColor;
 			}
 		}
-	}
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+			Debug.Log("OnEndDrag");
+			_factory.Reclaim(_draggedTower);
+			_draggedTower = null;
+        }
+    }
 }
