@@ -30,7 +30,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		{
 			m_Currency = Game._instance.Currency;
 
-			UpdateDisplay(null, new CurrencyEventArgs { NewValue = 0f });
+			UpdateDisplay(null, new CurrencyEventArgs { NewValue = m_Currency.Value });
 			m_Currency.CurrencyChanged += UpdateDisplay;
 		}
 

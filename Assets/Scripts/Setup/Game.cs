@@ -35,7 +35,7 @@ namespace TowerDefence3d.Scripts.Setup
 
         [SerializeField, Range(1f, 2f)]
         private float _prepareTime;
-        [SerializeField, Range(10f, 50f)]
+        [SerializeField, Range(1f, 50f)]
         private float _firstCurrency = 10f;
 
         public static int CurrentHealth => _instance._currentPlayerhealth;

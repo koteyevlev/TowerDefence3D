@@ -612,7 +612,7 @@ MonoBehaviour:
   _scenario: {fileID: 11400000, guid: b346e0219ff99c94bb10c1197cb93cf5, type: 2}
   _startingPlayerHealth: 10
   _prepareTime: 1
-  _firstCurrency: 20
+  _firstCurrency: 15
 --- !u!4 &1534185322
 Transform:
   m_ObjectHideFlags: 0
