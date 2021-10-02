@@ -21,11 +21,10 @@ namespace TowerDefence3d.Scripts.UIObjects
 		[SerializeField]
 		private Text buttonText;
 
-
-		/// <summary>
+        /// <summary>
 		/// The tower controller that defines the button
 		/// </summary>
-		
+
 		[SerializeField]
 		private Tower m_Tower;
 
@@ -56,7 +55,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// <summary>
 		/// Cached reference to level currency
 		/// </summary>
-		Currency m_Currency;
+		Currency _currency;
 
 		/// <summary>
 		/// The attached rect transform
@@ -69,7 +68,6 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public virtual void OnDrag(PointerEventData eventData)
 		{
-			Debug.Log("OnDrag");
             var plane = new Plane(Vector3.up, Vector3.zero);
             if (plane.Raycast(TouchRay, out var position))
             {
@@ -89,19 +87,10 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </param>
 		void Start()
 		{
-			//if (towerData.levels.Length > 0)
-			//{
-			//	TowerLevel firstTower = towerData.levels[0];
 			buttonText.text = m_Tower.PurchaseCost.ToString();
-								//	towerIcon.sprite = firstTower.levelData.icon;
-								//}
-								//else
-								//{
-								//	Debug.LogWarning("[Tower Spawn Button] No level data for tower");
-								//}
 
-			m_Currency = Game._instance.Currency;
-			m_Currency.CurrencyChanged += UpdateButton;
+			_currency = Game._instance.Currency;
+			_currency.CurrencyChanged += UpdateButton;
 			UpdateButton(null, null);
 		}
 
@@ -118,9 +107,9 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected virtual void OnDestroy()
 		{
-			if (m_Currency != null)
+			if (_currency != null)
 			{
-				m_Currency.CurrencyChanged -= UpdateButton;
+				_currency.CurrencyChanged -= UpdateButton;
 			}
 		}
 
@@ -129,7 +118,12 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void OnBeginDrag(PointerEventData eventData)
 		{
-            Debug.LogWarning("OnBeginDrag");
+            if (!buyButton.IsInteractable())
+            {
+                eventData.pointerDrag = null;
+                Debug.LogWarning("No money"); 
+                return;
+            }
 			_draggedTower = _factory.Get(m_Tower.TowerType);
 
 			//var offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
@@ -150,18 +144,18 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		void UpdateButton(object sender, EventArgs e)
 		{
-			if (m_Currency == null)
+			if (_currency == null)
 			{
 				return;
 			}
 
 			// Enable button
-			if (m_Currency.CanAfford(m_Tower.PurchaseCost) && !buyButton.interactable)
+			if (_currency.CanAfford(m_Tower.PurchaseCost) && !buyButton.interactable)
 			{
 				buyButton.interactable = true;
 				energyIcon.color = energyDefaultColor;
 			}
-			else if (!m_Currency.CanAfford(m_Tower.PurchaseCost) && buyButton.interactable)
+			else if (!_currency.CanAfford(m_Tower.PurchaseCost) && buyButton.interactable)
 			{
 				buyButton.interactable = false;
 				energyIcon.color = energyInvalidColor;
@@ -170,11 +164,12 @@ namespace TowerDefence3d.Scripts.UIObjects
 
         public void OnEndDrag(PointerEventData eventData)
         {
-			Debug.Log("OnEndDrag");
             GameTile tile = _board.GetTile(TouchRay);
-            if (tile != null)
+            if (tile != null && tile.Content.Type == GameTileContentType.Empty)
             {
-                _board.ToggleTower(tile, _draggedTower.TowerType);
+                _currency.DecrementCurrency(_draggedTower.PurchaseCost);
+
+				_board.ToggleTower(tile, _draggedTower.TowerType);
             }
 
             _factory.Reclaim(_draggedTower);

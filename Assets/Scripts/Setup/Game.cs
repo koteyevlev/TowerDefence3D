@@ -39,11 +39,12 @@ namespace TowerDefence3d.Scripts.Setup
         private float _firstCurrency = 10f;
 
         public static int CurrentHealth => _instance._currentPlayerhealth;
-        public Currency Currency = new Currency();
+        public Currency Currency => _currency;
 
         private bool _scenarioInProcess;
         private int _currentPlayerhealth;
         private bool _isPaused;
+        private Currency _currency = new Currency();
         private GameScenario.State _activeScenario;
 
         private TowerType _currentTowerType;
@@ -90,32 +91,11 @@ namespace TowerDefence3d.Scripts.Setup
         private void Start()
         {
             _board.Initialize(_boardSize, _contentFactory);
-            Currency.SetCurrency(_firstCurrency);
+            _currency.SetCurrency(_firstCurrency);
             StopGame();
         }
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                StopGame();
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                _currentTowerType = TowerType.Laser;
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                _currentTowerType = TowerType.Mortar;
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                HandleTouch();
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                HandleAlternativeTouch();
-            }
 
             if (_scenarioInProcess)
             {
@@ -149,37 +129,6 @@ namespace TowerDefence3d.Scripts.Setup
             _instance._enemies.Add(enemy);
         }
 
-        private void HandleTouch()
-        {
-            GameTile tile = _board.GetTile(TouchRay);
-            if (tile != null)
-            {
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    _board.ToggleTower(tile, _currentTowerType);
-                }
-                else
-                {
-                    _board.ToggleWall(tile);
-                }
-            }
-        }
-
-        private void HandleAlternativeTouch()
-        {
-            GameTile tile = _board.GetTile(TouchRay);
-            if (tile != null)
-            {
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    _board.ToggleDestination(tile);
-                }
-                else
-                {
-                    _board.ToggleSpawnPoint(tile);
-                }
-            }
-        }
 
         public static Shell SpawnShell()
         {
@@ -206,6 +155,7 @@ namespace TowerDefence3d.Scripts.Setup
             _nonEnemies.Clear();
             _board.Clear();
             _currentPlayerhealth = _startingPlayerHealth;
+            _currency.SetCurrency(_firstCurrency);
             OnNewGame(EventArgs.Empty);
         }
 

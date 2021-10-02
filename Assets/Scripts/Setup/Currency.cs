@@ -40,6 +40,24 @@ namespace TowerDefence3d.Scripts.Setup
             });
         }
 
+        public void DecrementCurrency(float decrement)
+        {
+            _currency -= decrement;
+            OnCurrencyChanged(new CurrencyEventArgs
+            {
+                NewValue = _currency,
+            });
+        }
+
+        public void IncrementCurrency(float increment)
+        {
+            _currency += increment;
+            OnCurrencyChanged(new CurrencyEventArgs
+            {
+                NewValue = _currency,
+            });
+        }
+
         internal bool CanAfford(float purchaseCost)
         {
             return _currency >= purchaseCost;

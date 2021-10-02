@@ -12,6 +12,8 @@ namespace TowerDefence3d.Scripts.Enemies
         private Transform _model;
         [SerializeField]
         private EnemyView _enemyView;
+        [SerializeField]
+        private float _cost = 1.0f;
 
         public EnemyFactory OriginFactory { get; set; }
         public float Scale { get; private set; }
@@ -21,6 +23,7 @@ namespace TowerDefence3d.Scripts.Enemies
         private Vector3 _positionFrom, _positionTo;
         private float _progress, _progressFactor;
         private float _firstHealth;
+        Currency _currency;
 
         private Direction _direction;
         private DirectionChange _directionChange;
@@ -46,6 +49,7 @@ namespace TowerDefence3d.Scripts.Enemies
             Health = health;
             _firstHealth = health;
             _enemyView.Init(this);
+            _currency = Game._instance.Currency;
         }
         public void SpawnOn(GameTile spawnPoint)
         {
@@ -104,6 +108,7 @@ namespace TowerDefence3d.Scripts.Enemies
             {
                 DisableView();
                 _enemyView.Die();
+                _currency.IncrementCurrency(_cost);
                 return false;
             }
             _progress += Time.deltaTime * _progressFactor;
