@@ -1,4 +1,5 @@
 using System;
+using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.Setup;
 using TowerDefence3d.Scripts.Towers;
 using UnityEngine;
@@ -28,10 +29,17 @@ namespace TowerDefence3d.Scripts.UIObjects
 		[SerializeField]
 		private Tower m_Tower;
 
+        [SerializeField]
+        private Camera _camera;
+
 		[SerializeField]
 		private GameTileContentFactory _factory;
 
+        [SerializeField]
+        private GameBoard _board;
+
 		private Image towerIcon;
+        private Ray TouchRay => _camera.ScreenPointToRay(Input.mousePosition);
 
 		[SerializeField]
 		private Button buyButton;
@@ -62,10 +70,15 @@ namespace TowerDefence3d.Scripts.UIObjects
 		public virtual void OnDrag(PointerEventData eventData)
 		{
 			Debug.Log("OnDrag");
-			_draggedTower.transform.localPosition = Input.mousePosition;
-			if (!RectTransformUtility.RectangleContainsScreenPoint(m_RectTransform, eventData.position))
-			{
-			}
+            var plane = new Plane(Vector3.up, Vector3.zero);
+            if (plane.Raycast(TouchRay, out var position))
+            {
+                _draggedTower.transform.position = TouchRay.GetPoint(position);
+            }
+			//_draggedTower.transform.localPosition = Input.mousePosition;
+			//if (!RectTransformUtility.RectangleContainsScreenPoint(m_RectTransform, eventData.position))
+			//{
+			//}
 		}
 
 		/// <summary>
@@ -116,11 +129,21 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void OnBeginDrag(PointerEventData eventData)
 		{
-			Debug.LogWarning("OnBeginDrag");
+            Debug.LogWarning("OnBeginDrag");
 			_draggedTower = _factory.Get(m_Tower.TowerType);
-			_draggedTower.transform.localPosition = Input.mousePosition;
 
-		}
+			//var offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+			//Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+			//Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
+
+			var plane = new Plane(Vector3.up, Vector3.zero);
+            if (plane.Raycast(TouchRay, out var position))
+            {
+                _draggedTower.transform.position = TouchRay.GetPoint(position);
+            }
+            //new Vector3(-Input.mousePosition.x, -Input.mousePosition.y, 0);  // Input.mousePosition;
+
+        }
 
 		/// <summary>
 		/// Update the button's button state based on cost
@@ -148,8 +171,15 @@ namespace TowerDefence3d.Scripts.UIObjects
         public void OnEndDrag(PointerEventData eventData)
         {
 			Debug.Log("OnEndDrag");
-			_factory.Reclaim(_draggedTower);
+            GameTile tile = _board.GetTile(TouchRay);
+            if (tile != null)
+            {
+                _board.ToggleTower(tile, _draggedTower.TowerType);
+            }
+
+            _factory.Reclaim(_draggedTower);
 			_draggedTower = null;
+
         }
     }
 }
