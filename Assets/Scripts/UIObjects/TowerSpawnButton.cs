@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.Setup;
 using TowerDefence3d.Scripts.Towers;
@@ -31,6 +33,12 @@ namespace TowerDefence3d.Scripts.UIObjects
         [SerializeField]
         private Camera _camera;
 
+        [SerializeField]
+        private Material _validMaterial;
+
+        [SerializeField]
+        private Material _invalidMaterial;
+
 		[SerializeField]
 		private GameTileContentFactory _factory;
 
@@ -62,22 +70,41 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		RectTransform m_RectTransform;
 
-		/// <summary>
-		/// Checks if the pointer is out of bounds
-		/// and then fires the draggedOff event
-		/// </summary>
-		public virtual void OnDrag(PointerEventData eventData)
+        private List<MeshRenderer> _towerRenderes;
+        private bool _placementState;
+
+        /// <summary>
+        /// Checks if the pointer is out of bounds
+        /// and then fires the draggedOff event
+        /// </summary>
+        public virtual void OnDrag(PointerEventData eventData)
 		{
             var plane = new Plane(Vector3.up, Vector3.zero);
             if (plane.Raycast(TouchRay, out var position))
             {
                 _draggedTower.transform.position = TouchRay.GetPoint(position);
             }
-			//_draggedTower.transform.localPosition = Input.mousePosition;
-			//if (!RectTransformUtility.RectangleContainsScreenPoint(m_RectTransform, eventData.position))
-			//{
-			//}
+
+            var currentState = ValidPosition(out _);
+
+			if (ValidPosition(out _))
+            {
+                _placementState = currentState;
+				ChangeState(currentState);
+            }
 		}
+
+        private void ChangeState(bool state)
+        {
+            if (state)
+            {
+                _towerRenderes.ForEach(p => p.material = _validMaterial);
+            }
+            else
+            {
+				_towerRenderes.ForEach(p => p.material = _invalidMaterial);
+}
+}
 
 		/// <summary>
 		/// Define the button information for the tower
@@ -125,6 +152,18 @@ namespace TowerDefence3d.Scripts.UIObjects
                 return;
             }
 			_draggedTower = _factory.Get(m_Tower.TowerType);
+            _towerRenderes = new List<MeshRenderer>();
+            int numOfChildren = _draggedTower.transform.childCount;
+            for (int i = 0; i < numOfChildren; i++)
+            {
+                GameObject child = _draggedTower.transform.GetChild(i).gameObject;
+                _towerRenderes.Add(child.GetComponent<MeshRenderer>());
+                for (int j = 0; j < child.transform.childCount; i++)
+                {
+                    GameObject childOfChild = _draggedTower.transform.GetChild(j).gameObject;
+                    _towerRenderes.Add(childOfChild.GetComponent<MeshRenderer>());
+                }
+            }
 
 			//var offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
 			//Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
@@ -164,8 +203,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            GameTile tile = _board.GetTile(TouchRay);
-            if (tile != null && tile.Content.Type == GameTileContentType.Empty)
+            if (ValidPosition(out GameTile tile))
             {
                 _currency.DecrementCurrency(_draggedTower.PurchaseCost);
 
@@ -174,6 +212,18 @@ namespace TowerDefence3d.Scripts.UIObjects
 
             _factory.Reclaim(_draggedTower);
 			_draggedTower = null;
+
+        }
+
+        private bool ValidPosition(out GameTile tile)
+        {
+            tile = _board.GetTile(TouchRay);
+            if (tile != null && tile.Content.Type == GameTileContentType.Empty)
+            {
+                return true;
+            }
+
+            return false;
 
         }
     }
