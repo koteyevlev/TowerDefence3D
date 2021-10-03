@@ -15,7 +15,11 @@ namespace TowerDefence3d.Scripts.UIObjects
 	/// </summary>
 	[RequireComponent(typeof(RectTransform))]
 	public class TowerSpawnButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
-	{
+    {
+        private static List<string> _exceptRenders = new List<string>
+        {
+            "RadiusVisualiser",
+        };
 		/// <summary>
 		/// The text attached to the button
 		/// </summary>
@@ -161,14 +165,20 @@ namespace TowerDefence3d.Scripts.UIObjects
         private void AddRendersOfChild(Transform itemTransform)
         {
             int numOfChildren = itemTransform.childCount;
+
             for (int i = 0; i < numOfChildren; i++)
             {
                 GameObject child = itemTransform.GetChild(i).gameObject;
+                if (_exceptRenders.Contains(child.gameObject.name))
+                {
+                    continue;
+                }
+
                 var render = child.GetComponent<MeshRenderer>();
                 if (render != null)
                 {
                     _towerRenderes.Add(render);
-}
+                }
                 
                 if (child.transform.childCount > 0)
                 {

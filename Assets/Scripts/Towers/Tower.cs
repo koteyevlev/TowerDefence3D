@@ -11,10 +11,21 @@ namespace TowerDefence3d.Scripts.Towers
         [SerializeField, Range(1.5f, 10.5f)]
         public float _purchaseCost = 1.5f;
 
+        [SerializeField] 
+        private Transform _radiusVisualizer;
+
         public float PurchaseCost => _purchaseCost;
         private const int ENEMY_LAYER_MASK = 1 << 9;
 
         public abstract TowerType TowerType { get; }
+
+        private void Start()
+        {
+            _radiusVisualizer.localScale = new Vector3(
+                _targetingRange * 2, 
+                _targetingRange * 2, 
+                _targetingRange * 2);
+        }
 
         protected bool IsAcquireTarget(out TargetPoint target)
         {
@@ -44,15 +55,6 @@ namespace TowerDefence3d.Scripts.Towers
                 return false;
             }
             return true;
-        }
-
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.yellow;
-            Vector3 position = transform.localPosition;
-            position.y += 0.01f;
-            Gizmos.DrawWireSphere(position, _targetingRange);
         }
     }
 }
