@@ -216,7 +216,11 @@ namespace TowerDefence3d.Scripts.UIObjects
             {
                 _currency.DecrementCurrency(_draggedTower.PurchaseCost);
 
-				_board.ToggleTower(tile, _draggedTower.TowerType);
+				var tower = _board.SetTower(tile, _draggedTower.TowerType);
+                if (tower != null)
+                {
+                    tower.DisableRadius();
+                }
             }
 
             _factory.Reclaim(_draggedTower);

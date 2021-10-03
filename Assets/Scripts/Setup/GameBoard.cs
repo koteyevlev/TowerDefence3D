@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.Towers;
@@ -164,6 +165,12 @@ namespace TowerDefence3d.Scripts.Setup
             }
         }
 
+        public Tower SetTower(GameTile tile, TowerType type)
+        {
+            return _toggleTowerInternal(tile, type);
+        }
+
+        [Obsolete]
         public void ToggleTower(GameTile tile, TowerType type)
         {
             if (tile.Content.Type == GameTileContentType.Tower)
@@ -231,6 +238,39 @@ namespace TowerDefence3d.Scripts.Setup
             _contetToUpdate.Clear();
             ToggleDestination(_tiles[0]);
             ToggleSpawnPoint(_tiles[_tiles.Length - 1]);
+        }
+
+        private Tower _toggleTowerInternal(GameTile tile, TowerType type)
+        {
+            //if (tile.Content.Type == GameTileContentType.Tower)
+            //{
+            //    _contetToUpdate.Remove(tile.Content);
+            //    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            //    FindPaths();
+            //}
+            var tower = _contentFactory.Get(type);
+            if (tile.Content.Type == GameTileContentType.Empty)
+            {
+                tile.Content = tower;
+                if (FindPaths())
+                {
+                    _contetToUpdate.Add(tile.Content);
+                    return tower;
+                }
+                else
+                {
+                    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+                    FindPaths();
+                }
+            }
+            else if (tile.Content.Type == GameTileContentType.Wall)
+            {
+                tile.Content = tower;
+                _contetToUpdate.Add(tile.Content);
+                return tower;
+            }
+
+            return null;
         }
     }
 }

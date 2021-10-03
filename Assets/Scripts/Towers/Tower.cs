@@ -1,4 +1,5 @@
-﻿using TowerDefence3d.Scripts.MapObject;
+﻿using System;
+using TowerDefence3d.Scripts.MapObject;
 using UnityEngine;
 
 namespace TowerDefence3d.Scripts.Towers
@@ -55,6 +56,11 @@ namespace TowerDefence3d.Scripts.Towers
                 return false;
             }
             return true;
+        }
+
+        internal void DisableRadius()
+        {
+            _radiusVisualizer.gameObject.SetActive(false);
         }
     }
 }
