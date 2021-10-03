@@ -25,6 +25,11 @@ namespace TowerDefence3d.Scripts.MapObject
         {
 
         }
+
+        public virtual void OnClick()
+        {
+
+        }
     }
 
     public enum GameTileContentType

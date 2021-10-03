@@ -96,6 +96,10 @@ namespace TowerDefence3d.Scripts.Setup
         }
         private void Update()
         {
+            if (IsPointerDown())
+            {
+                HandleTouch();
+            }
 
             if (_scenarioInProcess)
             {
@@ -119,6 +123,24 @@ namespace TowerDefence3d.Scripts.Setup
             Physics.SyncTransforms();
             _board.GameUpdate();
             _nonEnemies.GameUpdate();
+        }
+
+        private void HandleTouch()
+        {
+            GameTile tile = _board.GetTile(TouchRay);
+            if (tile != null && tile.Content.Type == GameTileContentType.Tower)
+            {
+                tile.Content.OnClick();
+            }
+        }
+
+        private bool IsPointerDown()
+        {
+            #if UNITY_EDITOR
+            return Input.GetMouseButtonDown(0);
+            #else
+            return Input.touches.Length > 0;
+            #endif
         }
 
         public static void SpawnEnemy(EnemyFactory factory, EnemyType type)

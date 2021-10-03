@@ -20,6 +20,8 @@ namespace TowerDefence3d.Scripts.Towers
 
         public abstract TowerType TowerType { get; }
 
+        private bool _isRadiusEnabled;
+
         private void Start()
         {
             _radiusVisualizer.localScale = new Vector3(
@@ -61,6 +63,18 @@ namespace TowerDefence3d.Scripts.Towers
         internal void DisableRadius()
         {
             _radiusVisualizer.gameObject.SetActive(false);
+            _isRadiusEnabled = false;
+        }
+
+        public override void OnClick()
+        {
+            ChangeRadiusEnabled();
+            _radiusVisualizer.gameObject.SetActive(_isRadiusEnabled);
+        }
+
+        private void ChangeRadiusEnabled()
+        {
+            _isRadiusEnabled = !_isRadiusEnabled;
         }
     }
 }
