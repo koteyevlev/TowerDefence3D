@@ -553,12 +553,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: {fileID: 504434300}
-  m_Tower: {fileID: 8902008406104975686, guid: ecfac9c92ba4c5c4180c95aa1ea4be7a, type: 3}
+  _tower: {fileID: 8902008406104975686, guid: ecfac9c92ba4c5c4180c95aa1ea4be7a, type: 3}
   _camera: {fileID: 963194227}
+  _validMaterial: {fileID: 2100000, guid: 6fe9580bd67b34580977e0aa4eab9755, type: 2}
+  _invalidMaterial: {fileID: 2100000, guid: a33edf12f3c0044e8ba582a16ddaae3f, type: 2}
   _factory: {fileID: 11400000, guid: f68a98421273a3e41aae71f2ab226871, type: 2}
   _board: {fileID: 664391282}
   buyButton: {fileID: 1805217159}
   energyIcon: {fileID: 1285060684}
+  energyDefaultColor: {r: 0, g: 0, b: 0, a: 0}
+  energyInvalidColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &777799376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9044,12 +9048,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: {fileID: 6414986548521424498}
-  m_Tower: {fileID: 6768592678112678348, guid: bd2f05301994bb449ae6114ad80b8434, type: 3}
+  _tower: {fileID: 6768592678112678348, guid: bd2f05301994bb449ae6114ad80b8434, type: 3}
   _camera: {fileID: 963194227}
+  _validMaterial: {fileID: 2100000, guid: 6fe9580bd67b34580977e0aa4eab9755, type: 2}
+  _invalidMaterial: {fileID: 2100000, guid: a33edf12f3c0044e8ba582a16ddaae3f, type: 2}
   _factory: {fileID: 11400000, guid: f68a98421273a3e41aae71f2ab226871, type: 2}
   _board: {fileID: 664391282}
   buyButton: {fileID: 6415255791499159318}
   energyIcon: {fileID: 6414317405724034734}
+  energyDefaultColor: {r: 0, g: 0, b: 0, a: 0}
+  energyInvalidColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &6383634284616791018
 GameObject:
   m_ObjectHideFlags: 0

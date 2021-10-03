@@ -28,7 +28,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 
 		[SerializeField]
-		private Tower m_Tower;
+		private Tower _tower;
 
         [SerializeField]
         private Camera _camera;
@@ -52,9 +52,9 @@ namespace TowerDefence3d.Scripts.UIObjects
 		private Button buyButton;
 		[SerializeField]
 		private Image energyIcon;
-
+        [SerializeField]
 		private Color energyDefaultColor;
-
+        [SerializeField]
 		private Color energyInvalidColor;
 
 		private Tower _draggedTower = null;
@@ -64,11 +64,6 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// Cached reference to level currency
 		/// </summary>
 		Currency _currency;
-
-		/// <summary>
-		/// The attached rect transform
-		/// </summary>
-		RectTransform m_RectTransform;
 
         private List<MeshRenderer> _towerRenderes;
         private bool _placementState;
@@ -87,7 +82,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 
             var currentState = ValidPosition(out _);
 
-			if (ValidPosition(out _))
+			if (currentState != _placementState)
             {
                 _placementState = currentState;
 				ChangeState(currentState);
@@ -114,7 +109,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </param>
 		void Start()
 		{
-			buttonText.text = m_Tower.PurchaseCost.ToString();
+			buttonText.text = _tower.PurchaseCost.ToString();
 
 			_currency = Game._instance.Currency;
 			_currency.CurrencyChanged += UpdateButton;
@@ -126,7 +121,6 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected virtual void Awake()
 		{
-			m_RectTransform = (RectTransform) transform;
 		}
 
 		/// <summary>
@@ -151,37 +145,42 @@ namespace TowerDefence3d.Scripts.UIObjects
                 Debug.LogWarning("No money"); 
                 return;
             }
-			_draggedTower = _factory.Get(m_Tower.TowerType);
+			_draggedTower = _factory.Get(_tower.TowerType);
             _towerRenderes = new List<MeshRenderer>();
-            int numOfChildren = _draggedTower.transform.childCount;
-            for (int i = 0; i < numOfChildren; i++)
-            {
-                GameObject child = _draggedTower.transform.GetChild(i).gameObject;
-                _towerRenderes.Add(child.GetComponent<MeshRenderer>());
-                for (int j = 0; j < child.transform.childCount; i++)
-                {
-                    GameObject childOfChild = _draggedTower.transform.GetChild(j).gameObject;
-                    _towerRenderes.Add(childOfChild.GetComponent<MeshRenderer>());
-                }
-            }
-
-			//var offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-			//Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-			//Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
+            AddRendersOfChild(_draggedTower.transform);
 
 			var plane = new Plane(Vector3.up, Vector3.zero);
             if (plane.Raycast(TouchRay, out var position))
             {
                 _draggedTower.transform.position = TouchRay.GetPoint(position);
             }
-            //new Vector3(-Input.mousePosition.x, -Input.mousePosition.y, 0);  // Input.mousePosition;
 
+			ChangeState(false);
         }
 
-		/// <summary>
-		/// Update the button's button state based on cost
-		/// </summary>
-		void UpdateButton(object sender, EventArgs e)
+        private void AddRendersOfChild(Transform itemTransform)
+        {
+            int numOfChildren = itemTransform.childCount;
+            for (int i = 0; i < numOfChildren; i++)
+            {
+                GameObject child = itemTransform.GetChild(i).gameObject;
+                var render = child.GetComponent<MeshRenderer>();
+                if (render != null)
+                {
+                    _towerRenderes.Add(render);
+}
+                
+                if (child.transform.childCount > 0)
+                {
+                    AddRendersOfChild(child.transform);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Update the button's button state based on cost
+        /// </summary>
+        void UpdateButton(object sender, EventArgs e)
 		{
 			if (_currency == null)
 			{
@@ -189,12 +188,12 @@ namespace TowerDefence3d.Scripts.UIObjects
 			}
 
 			// Enable button
-			if (_currency.CanAfford(m_Tower.PurchaseCost) && !buyButton.interactable)
+			if (_currency.CanAfford(_tower.PurchaseCost) && !buyButton.interactable)
 			{
 				buyButton.interactable = true;
 				energyIcon.color = energyDefaultColor;
 			}
-			else if (!_currency.CanAfford(m_Tower.PurchaseCost) && buyButton.interactable)
+			else if (!_currency.CanAfford(_tower.PurchaseCost) && buyButton.interactable)
 			{
 				buyButton.interactable = false;
 				energyIcon.color = energyInvalidColor;
