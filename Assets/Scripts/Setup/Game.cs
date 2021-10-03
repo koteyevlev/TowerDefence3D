@@ -139,7 +139,7 @@ namespace TowerDefence3d.Scripts.Setup
             #if UNITY_EDITOR
             return Input.GetMouseButtonDown(0);
             #else
-            return Input.touches.Length > 0;
+            return Input.touches.Length > 0 && Input.touches[0].phase == TouchPhase.Began;
             #endif
         }
 
