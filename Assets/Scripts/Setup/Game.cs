@@ -136,11 +136,13 @@ namespace TowerDefence3d.Scripts.Setup
             {
                 tile.Content.OnClick();
             }
-            else if(tile != null)
-            {
-                // debug
-                _board.ToggleWall(tile);
-            }
+            //else if(tile != null)
+            //{
+            //    // debug
+            //    #if UNITY_EDITOR
+            //    _board.ToggleWall(tile);
+            //    #endif
+            //}
             else
             {
                 _cameraMove.Drag = true;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace TowerDefence3d.Scripts.UIObjects
@@ -8,9 +9,9 @@ namespace TowerDefence3d.Scripts.UIObjects
     {
         private Vector3 _cameraGoal, _oldMousePos, _newPos;
         private Camera _camera;
-        [SerializeField, Range(0.01f, 0.1f)]
+        [SerializeField, Range(0.01f, 0.5f)]
         private float _cameraSpeed = 0.1f;
-        [SerializeField, Range(0.01f, 0.1f)]
+        [SerializeField, Range(0.01f, 0.5f)]
         private float _norm = 1f;
         [SerializeField, Range(0.5f, 10f)]
         private float _maxCameraGoal = 1f;
@@ -45,11 +46,11 @@ namespace TowerDefence3d.Scripts.UIObjects
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    _oldMousePos = _camera.ScreenToViewportPoint(Input.mousePosition);
+                    _oldMousePos = GetPosition();
                 }
                 if (Drag)
                 {
-                    _newPos = _camera.ScreenToViewportPoint(Input.mousePosition);
+                    _newPos = GetPosition();
 
                     _cameraGoal = GetShift();
                 }
@@ -58,6 +59,15 @@ namespace TowerDefence3d.Scripts.UIObjects
                     Drag = false;
                 }
             }
+        }
+
+        private Vector3 GetPosition()
+        {
+            #if UNITY_EDITOR
+            return _camera.ScreenToViewportPoint(Input.mousePosition);
+            #else
+            return _camera.ScreenToViewportPoint(Input.GetTouch(0).position);
+            #endif
         }
 
         private void CalculateZoom()

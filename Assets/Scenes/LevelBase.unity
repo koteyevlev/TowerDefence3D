@@ -788,8 +788,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraSpeed: 0.1
-  _norm: 0.1
-  _maxCameraGoal: 10
+  _norm: 0.4
+  _maxCameraGoal: 4.75
 --- !u!1 &1088235557
 GameObject:
   m_ObjectHideFlags: 0
