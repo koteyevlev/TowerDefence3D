@@ -177,7 +177,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33713147}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1313,7 +1313,7 @@ TerrainCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046694912}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9f93f63d068b08c459038c40fce897d8, type: 2}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: dc8059fde4ad8244e9b7373fa2999714, type: 2}
   m_EnableTreeColliders: 1
