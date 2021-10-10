@@ -789,7 +789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraSpeed: 0.1
   _norm: 0.1
-  _maxCameraGoal: 3.13
+  _maxCameraGoal: 10
 --- !u!1 &1088235557
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e55af582a65b640988d5eca32c6394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boardSize: {x: 7, y: 7}
+  _boardSize: {x: 15, y: 15}
   _board: {fileID: 664391282}
   _camera: {fileID: 963194227}
   _cameraMove: {fileID: 963194229}
@@ -1376,7 +1376,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046694912}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -100, y: -10, z: -100}
+  m_LocalPosition: {x: -100, y: -5, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 207509916}
