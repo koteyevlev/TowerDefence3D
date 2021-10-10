@@ -3,6 +3,7 @@ using System.Collections;
 using TowerDefence3d.Scripts.Enemies;
 using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.Towers;
+using TowerDefence3d.Scripts.UIObjects;
 using UnityEngine;
 
 namespace TowerDefence3d.Scripts.Setup
@@ -17,6 +18,9 @@ namespace TowerDefence3d.Scripts.Setup
 
         [SerializeField]
         private Camera _camera;
+
+        [SerializeField]
+        private CameraMove _cameraMove;
 
         [SerializeField]
         private WaveVizual _waveVizual;
@@ -136,6 +140,10 @@ namespace TowerDefence3d.Scripts.Setup
             {
                 // debug
                 _board.ToggleWall(tile);
+            }
+            else
+            {
+                _cameraMove.Drag = true;
             }
         }
 

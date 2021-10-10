@@ -61,7 +61,10 @@ namespace TowerDefence3d.Scripts.UIObjects
         [SerializeField]
 		private Color energyInvalidColor;
 
-		private Tower _draggedTower = null;
+        [SerializeField]
+        private CameraMove _cameraMove;
+
+        private Tower _draggedTower = null;
 
 
 		/// <summary>
@@ -91,7 +94,9 @@ namespace TowerDefence3d.Scripts.UIObjects
                 _placementState = currentState;
 				ChangeState(currentState);
             }
-		}
+
+            _cameraMove.Drag = false;
+        }
 
         private void ChangeState(bool state)
         {

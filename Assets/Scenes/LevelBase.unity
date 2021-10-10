@@ -657,6 +657,7 @@ MonoBehaviour:
   energyIcon: {fileID: 1285060684}
   energyDefaultColor: {r: 0, g: 0, b: 0, a: 0}
   energyInvalidColor: {r: 0, g: 0, b: 0, a: 0}
+  _cameraMove: {fileID: 963194229}
 --- !u!114 &777799376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,6 +702,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -773,6 +775,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 60, y: 60, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870822a6715ea6d43af6bd6b0e15abb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraSpeed: 0.1
+  _norm: 0.1
+  _maxCameraGoal: 3.13
 --- !u!1 &1088235557
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +963,7 @@ MonoBehaviour:
   _boardSize: {x: 7, y: 7}
   _board: {fileID: 664391282}
   _camera: {fileID: 963194227}
+  _cameraMove: {fileID: 963194229}
   _waveVizual: {fileID: 4020359261943107944}
   _contentFactory: {fileID: 11400000, guid: f68a98421273a3e41aae71f2ab226871, type: 2}
   _warFactory: {fileID: 11400000, guid: c22f220331bf3064a83541e8cd6f8805, type: 2}
@@ -9303,6 +9321,7 @@ MonoBehaviour:
   energyIcon: {fileID: 6414317405724034734}
   energyDefaultColor: {r: 0, g: 0, b: 0, a: 0}
   energyInvalidColor: {r: 0, g: 0, b: 0, a: 0}
+  _cameraMove: {fileID: 963194229}
 --- !u!1 &6383634284616791018
 GameObject:
   m_ObjectHideFlags: 0
