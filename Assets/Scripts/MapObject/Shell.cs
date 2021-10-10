@@ -41,7 +41,7 @@ namespace TowerDefence3d.Scripts.MapObject
             Vector3 d = _launchVelocity;
             d.y -= 9.81f * _age;
             transform.localRotation = Quaternion.LookRotation(d);
-            Game.SpawnExplosion().Initialize(p, 0.1f);
+            // Game.SpawnExplosion().Initialize(p, 0.1f);
             return true;
         }
     }

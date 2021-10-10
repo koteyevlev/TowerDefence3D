@@ -1,1 +1,0 @@
-'Spitter' uses the same animation clips as the 'chomper' model.

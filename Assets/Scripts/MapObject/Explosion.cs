@@ -52,9 +52,9 @@ namespace TowerDefence3d.Scripts.MapObject
                 _propertyBlock = new MaterialPropertyBlock();
             }
             float t = _age / _duration;
-            Color c = Color.yellow;
-            c.a = _colorCurve.Evaluate(t);
-            _propertyBlock.SetColor(_colorPropId, c);
+            // Color c = Color.yellow;
+            //c.a = _colorCurve.Evaluate(t);
+            // _propertyBlock.SetColor(_colorPropId, c);
             _meshRenderer.SetPropertyBlock(_propertyBlock);
             transform.localScale = Vector3.one * (_scale * _scaleCurve.Evaluate(t));
             return true;
