@@ -132,6 +132,11 @@ namespace TowerDefence3d.Scripts.Setup
             {
                 tile.Content.OnClick();
             }
+            else if(tile != null)
+            {
+                // debug
+                _board.ToggleWall(tile);
+            }
         }
 
         private bool IsPointerDown()

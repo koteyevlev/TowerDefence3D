@@ -102,7 +102,8 @@ namespace TowerDefence3d.Scripts.Setup
             }
             foreach (GameTile t in _tiles)
             {
-                if (!t.HasPath)
+                if (!t.HasPath 
+                    && t.Content.Type == GameTileContentType.Empty)
                 {
                     return false;
                 }
