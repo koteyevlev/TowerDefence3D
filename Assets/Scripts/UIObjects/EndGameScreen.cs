@@ -1,8 +1,12 @@
 ﻿using System;
+using Core.Game;
 using TowerDefence3d.Scripts.Setup;
+using TowerDefense.Game;
+using TowerDefense.Level;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
 
 namespace TowerDefence3d.Scripts.UIObjects
 {
@@ -14,75 +18,92 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// <summary>
 		/// AudioClip to play when victorious
 		/// </summary>
-		public AudioClip victorySound;
+		[SerializeField]
+		private AudioClip _victorySound;
 
 		/// <summary>
 		/// AudioClip to play when failed
 		/// </summary>
-		public AudioClip defeatSound;
+        [SerializeField]
+        private AudioClip _defeatSound;
 
 		/// <summary>
 		/// AudioSource that plays the sound
 		/// </summary>
-		public AudioSource audioSource;
+        [SerializeField]
+		private AudioSource _audioSource;
 
 		/// <summary>
 		/// The containing panel of the End Game UI
 		/// </summary>
-		public Canvas endGameCanvas;
+        [SerializeField]
+        private Canvas _endGameCanvas;
 
 		/// <summary>
 		/// Reference to the Text object that displays the result message
 		/// </summary>
-		public Text endGameMessageText;
+        [SerializeField]
+        private Text _endGameMessageText;
 
 		/// <summary>
 		/// Panel that shows final star rating
 		/// </summary>
-		public ScorePanel scorePanel;
+        [SerializeField]
+		private ScorePanel _scorePanel;
 
 		/// <summary>
 		/// Name of level select screen
 		/// </summary>
-		public string menuSceneName = "MainMenu";
+        private const string _menuSceneName = "MainMenu";
+
+        [SerializeField]
+        private string _onRestartAdUnitName = "Interstitial_Android";
+
+        [SerializeField]
+        private string _onMenuAdUnitName = "Interstitial_Android";
 
 		/// <summary>
 		/// Text to be displayed on popup
 		/// </summary>
-		public string levelCompleteText = "{0} COMPLETE!";
-		
-		public string levelFailedText = "{0} FAILED!";
+		private const string _levelCompleteText = "{0} COMPLETE!";
+
+        private const string _levelFailedText = "{0} FAILED!";
 
 		/// <summary>
 		/// Background image
 		/// </summary>
-		public Image background;
+        [SerializeField]
+		private Image _background;
 
 		/// <summary>
-		/// Color to set background
+		/// Color to set _background
 		/// </summary>
-		public Color winBackgroundColor;
-		
-		public Color loseBackgroundColor;
+        [SerializeField]
+		private Color _winBackgroundColor;
+
+        [SerializeField]
+		private Color _loseBackgroundColor;
 
 		/// <summary>
 		/// The Canvas that holds the button to go to the next level
 		/// if the player has beaten the level
 		/// </summary>
-		public Canvas nextLevelButton;
+        [SerializeField]
+		private Canvas _nextLevelButton;
 
-		/// <summary>
-		/// Reference to the <see cref="LevelManager" />
-		/// </summary>
-		private Game _gameInstance;
-
-		/// <summary>
+        /// <summary>
 		/// Safely unsubscribes from <see cref="LevelManager" /> events.
 		/// Go back to the main menu scene
 		/// </summary>
 		public void GoToMainMenu()
 		{
-			SceneManager.LoadScene(menuSceneName);
+            if (Advertisement.IsReady())
+            {
+                Debug.Log("Load ad" + _onMenuAdUnitName);
+                Advertisement.Load(_onRestartAdUnitName);
+            }
+
+			SceneManager.LoadScene(_menuSceneName);
 			SafelyUnsubscribe();
 		}
 
@@ -92,6 +113,12 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void RestartLevel()
 		{
+            if (Advertisement.IsReady())
+            {
+                Debug.Log("Load ad" + _onRestartAdUnitName);
+                Advertisement.Load(_onRestartAdUnitName);
+            }
+
 			Game._instance.StopGame();
 			SafelyUnsubscribe();
 			Start();
@@ -113,11 +140,12 @@ namespace TowerDefence3d.Scripts.UIObjects
 		protected void Start()
 		{
 			LazyLoad();
-			endGameCanvas.enabled = false;
-			nextLevelButton.enabled = false;
-			nextLevelButton.gameObject.SetActive(false);
+			_endGameCanvas.enabled = false;
+			_nextLevelButton.enabled = false;
+			_nextLevelButton.gameObject.SetActive(false);
+            
 
-			Game._instance.LevelComplete += Victory;
+            Game._instance.LevelComplete += Victory;
 			Game._instance.LevelDefeat += Defeat;
 		}
 
@@ -126,10 +154,13 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected void OpenEndGameScreen(string endResultText)
 		{
-			endGameCanvas.enabled = true;
+			_endGameCanvas.enabled = true;
 
 			int score = CalculateFinalScore();
-			scorePanel.SetStars(score);
+			_scorePanel.SetStars(score);
+            ;
+            LevelItem level = GameManager.instance.GetLevelForCurrentScene();
+            GameManager.instance.CompleteLevel(level.id, score);
 		}
 
 		/// <summary>
@@ -137,14 +168,14 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected void Victory(object sender, EventArgs e)
 		{
-			OpenEndGameScreen(levelCompleteText);
-			if ((victorySound != null) && (audioSource != null))
+			OpenEndGameScreen(_levelCompleteText);
+			if ((_victorySound != null) && (_audioSource != null))
 			{
-				audioSource.PlayOneShot(victorySound);
+				_audioSource.PlayOneShot(_victorySound);
 			}
-			background.color = winBackgroundColor;
-			nextLevelButton.enabled = true;
-			nextLevelButton.gameObject.SetActive(true);
+			_background.color = _winBackgroundColor;
+			_nextLevelButton.enabled = true;
+			_nextLevelButton.gameObject.SetActive(true);
 		}
 
 		/// <summary>
@@ -152,17 +183,17 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected void Defeat(object sender, EventArgs e)
 		{
-			OpenEndGameScreen(levelFailedText);
-			if (nextLevelButton != null)
+			OpenEndGameScreen(_levelFailedText);
+			if (_nextLevelButton != null)
 			{
-				nextLevelButton.enabled = false;
-				nextLevelButton.gameObject.SetActive(false);
+				_nextLevelButton.enabled = false;
+				_nextLevelButton.gameObject.SetActive(false);
 			}
-			if ((defeatSound != null) && (audioSource != null))
+			if ((_defeatSound != null) && (_audioSource != null))
 			{
-				audioSource.PlayOneShot(defeatSound);
+				_audioSource.PlayOneShot(_defeatSound);
 			}
-			background.color = loseBackgroundColor;
+			_background.color = _loseBackgroundColor;
 		}
 
 		/// <summary>

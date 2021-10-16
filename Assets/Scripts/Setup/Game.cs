@@ -20,6 +20,9 @@ namespace TowerDefence3d.Scripts.Setup
         private Camera _camera;
 
         [SerializeField]
+        private AdsInitializer _adsInitializer;
+
+        [SerializeField]
         private CameraMove _cameraMove;
 
         [SerializeField]

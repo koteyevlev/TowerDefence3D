@@ -2071,7 +2071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 4
-  _targetingRange: 2
+  _targetingRange: 5
   _purchaseCost: 10
   _radiusVisualizer: {fileID: 3649635981233398940}
   _shootsPerSecond: 1

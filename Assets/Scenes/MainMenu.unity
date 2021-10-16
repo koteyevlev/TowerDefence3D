@@ -7316,7 +7316,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0.0000076293945}
+  m_AnchoredPosition: {x: 0, y: 0.0000076293945}
   m_SizeDelta: {x: 0, y: 272}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1346799929
@@ -8414,7 +8414,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SFX VOLUME
+  m_Text: GAME VOLUME
 --- !u!222 &1756955578
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9167,6 +9167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 2712600781890094413}
   _enemyView: {fileID: 8902040831522994469}
+  _cost: 1
 --- !u!137 &7937419335622143474
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
