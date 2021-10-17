@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TowerDefence3d.Scripts.Enemies;
-using TowerDefence3d.Scripts.Setup;
 using UnityEngine;
 using UnityEngine.UI;
 using static TowerDefence3d.Scripts.Enemies.Enemy;

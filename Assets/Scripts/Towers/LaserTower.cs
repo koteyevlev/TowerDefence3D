@@ -11,6 +11,8 @@ namespace TowerDefence3d.Scripts.Towers
         private Transform _laserBeam;
         [SerializeField, Range(1f, 100f)]
         private float _damagePerSecond = 30f;
+        [SerializeField]
+        private AudioSource _shootSound;
         private Vector3 _laserBeamScale;
         private Vector3 _laserStartPosition;
 
@@ -45,6 +47,8 @@ namespace TowerDefence3d.Scripts.Towers
             _laserBeamScale.z = distance;
             _laserBeam.localScale = _laserBeamScale;
             _laserBeam.localPosition = _laserStartPosition + 0.5f * distance * _laserBeam.forward;
+            if (!_shootSound.isPlaying)
+                _shootSound.Play();
             _target.Enemy.TakeDamage(_damagePerSecond * Time.deltaTime);
         }
 

@@ -14,6 +14,8 @@ namespace TowerDefence3d.Scripts.Towers
         private float _shellBlastRadius = 1f;
         [SerializeField, Range(1f, 100f)]
         private float _damage;
+        [SerializeField]
+        private AudioSource _shootSound;
         public override TowerType TowerType => TowerType.Mortar;
         private float _launchSpeed;
         private float _launchProgress;
@@ -70,6 +72,7 @@ namespace TowerDefence3d.Scripts.Towers
             Vector3 prev = launchPoint;
 
             _mortar.localRotation = Quaternion.LookRotation(new Vector3(dir.x, tanTheta, dir.y));
+            _shootSound.Play();
 
             Game.SpawnShell().Initialize(launchPoint, targetPoint,
                 new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y), _shellBlastRadius, _damage);
