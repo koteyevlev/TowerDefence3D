@@ -129,7 +129,7 @@ namespace TowerDefense.UI
 				return;
 			}
 			LevelItem nextLevel = gm.levelList[index];
-			SceneManager.LoadScene(nextLevel.sceneName);
+			SceneManager.LoadScene(nextLevel.SceneName);
 		}
 
 		/// <summary>

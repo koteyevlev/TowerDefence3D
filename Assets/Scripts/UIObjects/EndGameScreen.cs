@@ -65,9 +65,9 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// <summary>
 		/// Text to be displayed on popup
 		/// </summary>
-		private const string _levelCompleteText = "{0} COMPLETE!";
+		private const string _levelCompleteText = "LEVEL COMPLETE!";
 
-        private const string _levelFailedText = "{0} FAILED!";
+        private const string _levelFailedText = "LEVEL FAILED!";
 
 		/// <summary>
 		/// Background image
@@ -152,15 +152,26 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// <summary>
 		/// Shows the end game screen
 		/// </summary>
-		protected void OpenEndGameScreen(string endResultText)
+		protected void OpenEndGameScreen(string endResultText, bool isWin)
 		{
-			_endGameCanvas.enabled = true;
+			if (_endGameCanvas.enabled)
+                return;
+            
+            _endGameCanvas.enabled = true;
 
 			int score = CalculateFinalScore();
 			_scorePanel.SetStars(score);
-            ;
-            LevelItem level = GameManager.instance.GetLevelForCurrentScene();
-            GameManager.instance.CompleteLevel(level.id, score);
+            
+			if (isWin)
+            {
+                _endGameMessageText.text = _levelCompleteText;
+				LevelItem level = GameManager.instance.GetLevelForCurrentScene();
+                GameManager.instance.CompleteLevel(level.id, score);
+			}
+            else
+            {
+                _endGameMessageText.text = _levelFailedText;
+			}
 		}
 
 		/// <summary>
@@ -168,7 +179,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected void Victory(object sender, EventArgs e)
 		{
-			OpenEndGameScreen(_levelCompleteText);
+            OpenEndGameScreen(_levelCompleteText, true);
 			if ((_victorySound != null) && (_audioSource != null))
 			{
 				_audioSource.PlayOneShot(_victorySound);
@@ -183,7 +194,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected void Defeat(object sender, EventArgs e)
 		{
-			OpenEndGameScreen(_levelFailedText);
+			OpenEndGameScreen(_levelFailedText, false);
 			if (_nextLevelButton != null)
 			{
 				_nextLevelButton.enabled = false;

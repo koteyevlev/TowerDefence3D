@@ -115,7 +115,7 @@ namespace Core.Game
 			{
 				LevelItem item = levels[i];
 				if (item != null &&
-				    item.sceneName == scene)
+				    item.name == scene)
 				{
 					return item;
 				}

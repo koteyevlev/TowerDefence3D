@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GameScenario
   m_EditorClassIdentifier: 
   _waves:
-  - {fileID: 11400000, guid: afc146979adb2a8499e1be6791a890e0, type: 2}
-  - {fileID: 11400000, guid: afc146979adb2a8499e1be6791a890e0, type: 2}
-  - {fileID: 11400000, guid: afc146979adb2a8499e1be6791a890e0, type: 2}
-  - {fileID: 11400000, guid: afc146979adb2a8499e1be6791a890e0, type: 2}
+  - {fileID: 11400000, guid: 44100ab724a0b3e4ab200d07024fd2b6, type: 2}
+  - {fileID: 11400000, guid: d0aa42fc3f50e8940ba2a8017dc8d4ff, type: 2}
+  - {fileID: 11400000, guid: 498b89acc6de0c944bc31190bf4f84c1, type: 2}
+  - {fileID: 11400000, guid: 62d82f6ee455f4a4695ec5803fc24615, type: 2}
+  - {fileID: 11400000, guid: 00dd2c6ba61d7b441901586217a7b321, type: 2}

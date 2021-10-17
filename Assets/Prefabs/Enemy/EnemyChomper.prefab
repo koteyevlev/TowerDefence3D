@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 7727519997906180257}
   _enemyView: {fileID: 3824352732712412361}
+  _cost: 1
 --- !u!1 &1513926359891387503
 GameObject:
   m_ObjectHideFlags: 0

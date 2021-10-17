@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.Towers;
+using TowerDefense.Game;
 using UnityEngine;
 
 namespace TowerDefence3d.Scripts.Setup
@@ -24,16 +25,16 @@ namespace TowerDefence3d.Scripts.Setup
         private List<GameTileContent> _contetToUpdate = new List<GameTileContent>();
 
         public int SpownPointsCount => _spawnPoints.Count;
-        public void Initialize(Vector2Int size, GameTileContentFactory contentFactory)
+        public void Initialize(GameTileContentFactory contentFactory)
         {
-            _size = size;
-            _ground.localScale = new Vector3(size.x, size.y, 1f);
-            Vector2 offset = new Vector2((size.x - 1) * 0.5f, (size.y - 1) * 0.5f);
-            _tiles = new GameTile[size.x * size.y];
+            _size = GameManager.instance.GetLevelForCurrentScene().BoardSize;
+            _ground.localScale = new Vector3(_size.x, _size.y, 1f);
+            Vector2 offset = new Vector2((_size.x - 1) * 0.5f, (_size.y - 1) * 0.5f);
+            _tiles = new GameTile[_size.x * _size.y];
             _contentFactory = contentFactory;
-            for (int i = 0, y = 0; y < size.y; y++)
+            for (int i = 0, y = 0; y < _size.y; y++)
             {
-                for (int x = 0; x < size.x; x++, i++)
+                for (int x = 0; x < _size.x; x++, i++)
                 {
                     GameTile tile = _tiles[i] = Instantiate(_tilePrefab);
                     tile.transform.SetParent(transform, false);
@@ -45,7 +46,7 @@ namespace TowerDefence3d.Scripts.Setup
                     }
                     if (y > 0)
                     {
-                        GameTile.MakeNorthSouthNeigbors(tile, _tiles[i - size.x]);
+                        GameTile.MakeNorthSouthNeigbors(tile, _tiles[i - _size.x]);
                     }
                     tile.IsAlternative = (x & 1) == 0;
                     if ((y & 1) == 0)
@@ -148,20 +149,19 @@ namespace TowerDefence3d.Scripts.Setup
 
         public void ToggleWall(GameTile tile)
         {
-            if (tile.Content.Type == GameTileContentType.Wall)
-            {
-                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-                FindPaths();
-
-            }
-            else if (tile.Content.Type == GameTileContentType.Empty)
+            //if (tile.Content.Type == GameTileContentType.Wall)
+            //{
+            //    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            //    FindPaths();
+            //}
+            if (tile.Content.Type == GameTileContentType.Empty)
             {
                 tile.Content = _contentFactory.Get(GameTileContentType.Wall);
-                if (!FindPaths())
-                {
-                    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-                    FindPaths();
-                }
+                //if (!FindPaths())
+                //{
+                //    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+                //    FindPaths();
+                //}
             }
         }
 
@@ -236,8 +236,38 @@ namespace TowerDefence3d.Scripts.Setup
             }
             _spawnPoints.Clear();
             _contetToUpdate.Clear();
-            ToggleDestination(_tiles[0]);
-            ToggleSpawnPoint(_tiles[_tiles.Length - 1]);
+            try
+            {
+                SpawnByLevel();
+                Debug.Log("Spawn Successful");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+                ToggleDestination(_tiles[0]);
+                ToggleSpawnPoint(_tiles[_tiles.Length - 1]);
+            }
+        }
+
+        private void SpawnByLevel()
+        {
+            var level = GameManager.instance.GetLevelForCurrentScene();
+            foreach (var rock in level.RocksPoints)
+            {
+                Debug.Log("rock");
+                Debug.Log(rock);
+                ToggleWall(_tiles[rock.y + rock.x * level.BoardSize.x]);
+            }
+
+            foreach (var spawn in level.StartPoints)
+            {
+                ToggleSpawnPoint(_tiles[spawn.y + spawn.x * level.BoardSize.x]);
+            }
+
+            foreach (var end in level.EndPoints)
+            {
+                ToggleDestination(_tiles[end.y + end.x * level.BoardSize.x]);
+            }
         }
 
         private Tower _toggleTowerInternal(GameTile tile, TowerType type)

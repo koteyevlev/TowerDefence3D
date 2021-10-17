@@ -16,6 +16,8 @@ namespace TowerDefense.Game
 		/// </summary>
 		public LevelList levelList;
 
+        private string _currentLevel = "Level 1";
+
 		/// <summary>
 		/// Set sleep timeout to never sleep
 		/// </summary>
@@ -47,9 +49,9 @@ namespace TowerDefense.Game
 		/// </summary>
 		public LevelItem GetLevelForCurrentScene()
 		{
-			string sceneName = SceneManager.GetActiveScene().name;
-
-			return levelList.GetLevelByScene(sceneName);
+			//string SceneName = SceneManager.GetActiveScene().name;
+			Debug.Log(_currentLevel);
+			return levelList.GetLevelByScene(_currentLevel);
 		}
 
 		/// <summary>
@@ -83,5 +85,10 @@ namespace TowerDefense.Game
 
 			return m_DataStore.GetNumberOfStarForLevel(levelId);
 		}
+
+        public void SetLevel(string levelId)
+        {
+            _currentLevel = levelId;
+        }
 	}
 }

@@ -381,7 +381,7 @@ Transform:
   m_LocalScale: {x: 113.08, y: 1, z: 113.28}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &208279996
 MeshFilter:
@@ -880,9 +880,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimeOfDay
       objectReference: {fileID: 0}
+    - target: {fileID: 128870, guid: 60db50946a122ca4084afb1bdbaf9317, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 481484, guid: 60db50946a122ca4084afb1bdbaf9317, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 481484, guid: 60db50946a122ca4084afb1bdbaf9317, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1620,7 +1624,7 @@ MonoBehaviour:
   _scenario: {fileID: 11400000, guid: b346e0219ff99c94bb10c1197cb93cf5, type: 2}
   _startingPlayerHealth: 10
   _prepareTime: 1
-  _firstCurrency: 40
+  _firstCurrency: 30
 --- !u!4 &1534185322
 Transform:
   m_ObjectHideFlags: 0
@@ -2067,6 +2071,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WeatherMaster
       objectReference: {fileID: 0}
+    - target: {fileID: 141594, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 450602, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -2115,6 +2123,22 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11429778, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
+      propertyPath: _fDay_LightIntensity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11429778, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
+      propertyPath: _fNight_LightIntensity
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11429778, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
+      propertyPath: _fSunset_LightIntensity
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11429778, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
+      propertyPath: _fSunrise_LightIntensity
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 11430436, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2143,6 +2167,22 @@ PrefabInstance:
       propertyPath: _gPartRain
       value: 
       objectReference: {fileID: 932877133}
+    - target: {fileID: 11465078, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
+      propertyPath: _fDay_LightIntensity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465078, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
+      propertyPath: _fNight_LightIntensity
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465078, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
+      propertyPath: _fSunset_LightIntensity
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11465078, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
+      propertyPath: _fSunrise_LightIntensity
+      value: 0.8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7404eeab8d5e49489a17e15938e8ec1, type: 3}
 --- !u!1 &1961254249

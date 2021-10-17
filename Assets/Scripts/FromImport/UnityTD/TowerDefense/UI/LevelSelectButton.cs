@@ -41,6 +41,7 @@ namespace TowerDefense.UI
 		/// </summary>
 		public void ButtonClicked()
 		{
+			GameManager.instance.SetLevel(m_Item.name);
 			ChangeScenes();
 		}
 
@@ -86,7 +87,7 @@ namespace TowerDefense.UI
 		/// </summary>
 		protected void ChangeScenes()
 		{
-			SceneManager.LoadScene(m_Item.sceneName);
+			SceneManager.LoadScene(m_Item.SceneName);
 		}
 
 		/// <summary>

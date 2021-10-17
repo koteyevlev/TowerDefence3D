@@ -50,7 +50,7 @@ namespace TowerDefence3d.Scripts.Setup
 
         private bool _scenarioInProcess;
         private int _currentPlayerhealth;
-        private bool _isPaused;
+        private bool _isPaused = false;
         private Currency _currency = new Currency();
         private GameScenario.State _activeScenario;
 
@@ -97,9 +97,10 @@ namespace TowerDefence3d.Scripts.Setup
 
         private void Start()
         {
-            _board.Initialize(_boardSize, _contentFactory);
+            _board.Initialize(_contentFactory);
             _currency.SetCurrency(_firstCurrency);
             StopGame();
+            _isPaused = false;
         }
         private void Update()
         {
@@ -139,13 +140,13 @@ namespace TowerDefence3d.Scripts.Setup
             {
                 tile.Content.OnClick();
             }
-            //else if(tile != null)
-            //{
-            //    // debug
-            //    #if UNITY_EDITOR
-            //    _board.ToggleWall(tile);
-            //    #endif
-            //}
+//            else if (tile != null)
+//            {
+//                // debug
+//#if UNITY_EDITOR
+//                _board.ToggleWall(tile);
+//#endif
+//            }
             else
             {
                 _cameraMove.Drag = true;

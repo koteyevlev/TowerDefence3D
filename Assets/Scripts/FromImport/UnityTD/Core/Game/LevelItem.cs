@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Core.Game
 {
@@ -26,6 +27,14 @@ namespace Core.Game
 		/// <summary>
 		/// The name of the scene to load
 		/// </summary>
-		public string sceneName;
+		public string SceneName;
+
+        public Vector2Int BoardSize;
+
+        public Vector2Int[] StartPoints;
+
+        public Vector2Int[] EndPoints;
+
+        public Vector2Int[] RocksPoints;
 	}
 }
