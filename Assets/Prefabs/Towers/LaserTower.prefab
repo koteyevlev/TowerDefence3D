@@ -386,7 +386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 4
-  _targetingRange: 3
+  _targetingRange: 5
   _purchaseCost: 5
   _radiusVisualizer: {fileID: 2566838359917682630}
   _turret: {fileID: 2317090304058942456}

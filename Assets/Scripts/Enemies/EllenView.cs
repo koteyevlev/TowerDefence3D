@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace TowerDefence3d.Scripts.Enemies
+﻿namespace TowerDefence3d.Scripts.Enemies
 {
     public class EllenView : EnemyView
     {

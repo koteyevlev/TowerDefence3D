@@ -2071,10 +2071,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 4
-  _targetingRange: 5
+  _targetingRange: 4
   _purchaseCost: 10
   _radiusVisualizer: {fileID: 3649635981233398940}
   _shootsPerSecond: 1
   _mortar: {fileID: 472644773045544176}
   _shellBlastRadius: 1.52
-  _damage: 52
+  _damage: 50
