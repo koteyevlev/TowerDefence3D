@@ -91,7 +91,7 @@ namespace TowerDefence3d.Scripts.UIObjects
         [SerializeField]
 		private Canvas _nextLevelButton;
 
-        /// <summary>
+		/// <summary>
 		/// Safely unsubscribes from <see cref="LevelManager" /> events.
 		/// Go back to the main menu scene
 		/// </summary>
@@ -99,9 +99,10 @@ namespace TowerDefence3d.Scripts.UIObjects
 		{
             if (Advertisement.IsReady())
             {
-                Debug.Log("Load ad" + _onMenuAdUnitName);
-                Advertisement.Load(_onRestartAdUnitName);
-            }
+                Debug.Log("Load ad " + _onMenuAdUnitName);
+                Advertisement.Load(_onMenuAdUnitName);
+                Advertisement.Show(_onMenuAdUnitName);
+			}
 
 			SceneManager.LoadScene(_menuSceneName);
 			SafelyUnsubscribe();
@@ -115,8 +116,9 @@ namespace TowerDefence3d.Scripts.UIObjects
 		{
             if (Advertisement.IsReady())
             {
-                Debug.Log("Load ad" + _onRestartAdUnitName);
-                Advertisement.Load(_onRestartAdUnitName);
+                Debug.Log("Load ad " + _onRestartAdUnitName);
+                Advertisement.Load(_onRestartAdUnitName); 
+                Advertisement.Show(_onRestartAdUnitName);
             }
 
 			Game._instance.StopGame();
@@ -143,9 +145,9 @@ namespace TowerDefence3d.Scripts.UIObjects
 			_endGameCanvas.enabled = false;
 			_nextLevelButton.enabled = false;
 			_nextLevelButton.gameObject.SetActive(false);
-            
+            Time.timeScale = 1f;
 
-            Game._instance.LevelComplete += Victory;
+			Game._instance.LevelComplete += Victory;
 			Game._instance.LevelDefeat += Defeat;
 		}
 

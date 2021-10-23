@@ -203,12 +203,19 @@ namespace TowerDefence3d.Scripts.Setup
         public void OnStartWaveButtonClicked()
         {
             _prepareRoutine = StartCoroutine(PrepareRoutine());
+            OnStartGame();
         }
 
         public void OnPausedClicked()
         {
             _isPaused = !_isPaused;
             Time.timeScale = _isPaused ? 0f : 1f;
+        }
+
+        private void OnStartGame()
+        {
+            _isPaused = false;
+            Time.timeScale = 1f;
         }
 
         public static void EnemyReachedDestination()
