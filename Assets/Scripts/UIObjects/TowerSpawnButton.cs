@@ -238,7 +238,12 @@ namespace TowerDefence3d.Scripts.UIObjects
             tile = _board.GetTile(TouchRay);
             if (tile != null && tile.Content.Type == GameTileContentType.Empty)
             {
-                return true;
+                if (_board.FindPaths(tile))
+                {
+                    return true;
+                }
+
+                return false;
             }
 
             return false;

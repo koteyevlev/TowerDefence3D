@@ -8,13 +8,23 @@ namespace TowerDefence3d.Scripts.MapObject
     [SelectionBase]
     public class GameTileContent : MonoBehaviour
     {
-        [SerializeField]
-        private GameTileContentType _type;
+        [SerializeField] private GameTileContentType _type;
 
         public GameTileContentType Type => _type;
 
+        public bool IsChangableByRayCast = false;
+
         public GameTileContentFactory OriginFactory { get; set; }
-        public bool IsBlockingPath => Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;
+        public bool IsBlockingPath 
+        {
+            get
+            {
+                return 
+                    Type == GameTileContentType.Wall 
+                    || Type == GameTileContentType.Tower
+                    || IsChangableByRayCast;
+            }
+        }
 
         public void Recycle()
         {

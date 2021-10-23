@@ -112,6 +112,14 @@ namespace TowerDefence3d.Scripts.Setup
             return true;
         }
 
+        public bool FindPaths(GameTile tile)
+        {
+            tile.Content.IsChangableByRayCast = true;
+            var result = FindPaths();
+            tile.Content.IsChangableByRayCast = false;
+            return result;
+        }
+
         public void ToggleDestination(GameTile tile)
         {
             if (tile.Content.Type == GameTileContentType.Destination)
