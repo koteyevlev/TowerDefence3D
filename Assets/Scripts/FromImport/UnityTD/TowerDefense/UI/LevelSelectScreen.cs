@@ -28,6 +28,9 @@ namespace TowerDefense.UI
 		/// </summary>
 		public Transform rightBuffer;
 
+		[SerializeField]
+		private GameObject _loadingScreen;
+
 		public Button backButton;
 
 		public MouseScroll mouseScroll;
@@ -99,7 +102,7 @@ namespace TowerDefense.UI
 		protected LevelSelectButton CreateButton(LevelItem item)
 		{
 			LevelSelectButton button = Instantiate(selectionPrefab);
-			button.Initialize(item, mouseScroll);
+			button.Initialize(item, mouseScroll, _loadingScreen);
 			return button;
 		}
 

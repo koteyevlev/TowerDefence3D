@@ -1,4 +1,6 @@
 ﻿using Core.Game;
+using System.Collections;
+using System.Collections.Generic;
 using TowerDefense.Game;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -31,6 +33,8 @@ namespace TowerDefense.UI
 
 		protected MouseScroll m_MouseScroll;
 
+		private GameObject _loadingScreen;
+
 		/// <summary>
 		/// The data concerning the level this button displays
 		/// </summary>
@@ -41,7 +45,13 @@ namespace TowerDefense.UI
 		/// </summary>
 		public void ButtonClicked()
 		{
+			if (m_Item.SceneName.Length < 1)
+            {
+				Debug.Log("No Scene");
+				return;
+            }
 			GameManager.instance.SetLevel(m_Item.name);
+			_loadingScreen.active = true;
 			ChangeScenes();
 		}
 
@@ -51,8 +61,10 @@ namespace TowerDefense.UI
 		/// <param name="item">
 		/// The data with the information concerning the level
 		/// </param>
-		public void Initialize(LevelItem item, MouseScroll mouseScroll)
+		public void Initialize(LevelItem item, MouseScroll mouseScroll,
+			GameObject loadingScreen)
 		{
+			_loadingScreen = loadingScreen;
 			LazyLoad();
 			if (titleDisplay == null)
 			{
@@ -63,6 +75,11 @@ namespace TowerDefense.UI
 			description.text = item.description;
 			HasPlayedState();
 			m_MouseScroll = mouseScroll;
+			if (m_Item.SceneName.Length < 1)
+            {
+				m_Button.interactable = false;
+
+			}
 		}
 
 		/// <summary>
@@ -87,7 +104,24 @@ namespace TowerDefense.UI
 		/// </summary>
 		protected void ChangeScenes()
 		{
-			SceneManager.LoadScene(m_Item.SceneName);
+			// SceneManager.LoadScene(m_Item.SceneName);
+			StartCoroutine(LoadYourAsyncScene());
+		}
+
+		IEnumerator LoadYourAsyncScene()
+		{
+			// The Application loads the Scene in the background as the current Scene runs.
+			// This is particularly good for creating loading screens.
+			// You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
+			// a sceneBuildIndex of 1 as shown in Build Settings.
+
+			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(m_Item.SceneName);
+
+			// Wait until the asynchronous scene fully loads
+			while (!asyncLoad.isDone)
+			{
+				yield return null;
+			}
 		}
 
 		/// <summary>

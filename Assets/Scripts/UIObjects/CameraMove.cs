@@ -22,6 +22,9 @@ namespace TowerDefence3d.Scripts.UIObjects
         private bool _wasZoomingLastFrame; // Touch mode only
         private Vector2[] _lastZoomPositions; // Touch mode only
         public bool Drag { get; set; }
+
+        float _time = 0;
+        public float _delay = 2f;
         void Start()
         {
             _camera = Camera.main;
@@ -47,11 +50,17 @@ namespace TowerDefence3d.Scripts.UIObjects
                 if (Input.GetMouseButtonDown(0))
                 {
                     _oldMousePos = GetPosition();
+                    _time = 0f;
                 }
                 if (Drag)
                 {
                     _newPos = GetPosition();
-
+                    _time += Time.deltaTime;
+                    if (_time > _delay)
+                    {
+                        _time = 0f;
+                        _oldMousePos = GetPosition();
+                    }
                     _cameraGoal = GetShift();
                 }
                 if (Input.GetMouseButtonUp(0))
