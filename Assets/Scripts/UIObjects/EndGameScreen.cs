@@ -104,6 +104,7 @@ namespace TowerDefence3d.Scripts.UIObjects
                 Advertisement.Show(_onMenuAdUnitName);
 			}
 
+            Time.timeScale = 1f;
 			SceneManager.LoadScene(_menuSceneName);
 			SafelyUnsubscribe();
 		}

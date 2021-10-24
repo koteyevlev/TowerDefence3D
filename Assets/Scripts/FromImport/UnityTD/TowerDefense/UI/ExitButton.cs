@@ -13,7 +13,8 @@ namespace TowerDefense.UI
 		/// Close the game when this button is clicked
 		/// </summary>
 		public override void OnPointerClick(PointerEventData eventData)
-		{
+        {
+            Debug.Log("Quit");
 			Application.Quit();
 		}
 
@@ -23,13 +24,6 @@ namespace TowerDefense.UI
 		protected override void Awake()
 		{
 			base.Awake();
-
-#if UNITY_ANDROID || UNITY_IOS
-			if (Application.isPlaying)
-			{
-				gameObject.SetActive(false);
-			}
-#endif
-		}
+        }
 	}
 }
