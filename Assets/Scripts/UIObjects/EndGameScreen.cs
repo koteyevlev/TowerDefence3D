@@ -69,10 +69,13 @@ namespace TowerDefence3d.Scripts.UIObjects
 
         private const string _levelFailedText = "LEVEL FAILED!";
 
+        [SerializeField] 
+        private int _probabilityOfAds = 50;
+
 		/// <summary>
 		/// Background image
 		/// </summary>
-        [SerializeField]
+		[SerializeField]
 		private Image _background;
 
 		/// <summary>
@@ -97,7 +100,8 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void GoToMainMenu()
 		{
-            if (Advertisement.IsReady())
+            if (Advertisement.IsReady() &&
+                GetRandomProbability())
             {
                 Debug.Log("Load ad " + _onMenuAdUnitName);
                 Advertisement.Load(_onMenuAdUnitName);
@@ -109,13 +113,21 @@ namespace TowerDefence3d.Scripts.UIObjects
 			SafelyUnsubscribe();
 		}
 
-		/// <summary>
-		/// Safely unsubscribes from <see cref="LevelManager" /> events.
-		/// Reloads the active scene
-		/// </summary>
-		public void RestartLevel()
+        private bool GetRandomProbability()
+        {
+            var gen = new System.Random();
+            int prob = gen.Next(100);
+            return prob <= _probabilityOfAds;
+		}
+
+        /// <summary>
+        /// Safely unsubscribes from <see cref="LevelManager" /> events.
+        /// Reloads the active scene
+        /// </summary>
+        public void RestartLevel()
 		{
-            if (Advertisement.IsReady())
+            if (Advertisement.IsReady()
+            && GetRandomProbability())
             {
                 Debug.Log("Load ad " + _onRestartAdUnitName);
                 Advertisement.Load(_onRestartAdUnitName); 

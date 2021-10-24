@@ -11,7 +11,7 @@ namespace TowerDefence3d.Scripts.UIObjects
         private Camera _camera;
         [SerializeField, Range(0.01f, 0.5f)]
         private float _cameraSpeed = 0.1f;
-        [SerializeField, Range(0.01f, 0.5f)]
+        [SerializeField, Range(0.1f, 1f)]
         private float _norm = 1f;
         [SerializeField, Range(0.5f, 10f)]
         private float _maxCameraGoal = 1f;
