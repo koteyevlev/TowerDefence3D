@@ -7,6 +7,7 @@ Android - https://play.google.com/store/apps/details?id=com.CartmansGame.TowerDe
 
 Web - https://koteyevlev.github.io/TowerDefence3D/Builds/
 
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://www.youtube.com/watch?v=uCwz001yPcQ)
 
 This project includes:
 - abstract factory
