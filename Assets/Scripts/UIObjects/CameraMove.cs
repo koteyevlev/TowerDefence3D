@@ -24,7 +24,7 @@ namespace TowerDefence3d.Scripts.UIObjects
         public bool Drag { get; set; }
 
         float _time = 0;
-        public float _delay = 2f;
+        public float _delay = 1f;
         void Start()
         {
             _camera = Camera.main;

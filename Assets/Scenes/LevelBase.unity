@@ -499,6 +499,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19962026, guid: 48d6c5aab89b56243bcf7124726cc232, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6fe9580bd67b34580977e0aa4eab9755, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48d6c5aab89b56243bcf7124726cc232, type: 3}
 --- !u!1001 &371454241
@@ -1202,9 +1206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 870822a6715ea6d43af6bd6b0e15abb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraSpeed: 0.1
-  _norm: 0.4
+  _cameraSpeed: 0.374
+  _norm: 0.734
   _maxCameraGoal: 4.75
+  _delay: 2
 --- !u!1 &1038144542
 GameObject:
   m_ObjectHideFlags: 0
@@ -12034,6 +12039,7 @@ MonoBehaviour:
   _scorePanel: {fileID: 4574960378374424082}
   _onRestartAdUnitName: Interstitial_Android
   _onMenuAdUnitName: Banner_Android
+  _probabilityOfAds: 50
   _background: {fileID: 4530860425994202947}
   _winBackgroundColor: {r: 0.8962264, g: 0.8811003, b: 0.07186722, a: 0}
   _loseBackgroundColor: {r: 0.6132076, g: 0.3293294, b: 0.043387324, a: 0}

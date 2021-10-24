@@ -10,7 +10,7 @@ public class LoadingScreenManager : MonoBehaviour
         _animatorComponent = transform.GetComponent<Animator>();
         RevealLoadingScreen();
         // Remove it if you don't want to hide it in the Start function and call it elsewhere
-        HideLoadingScreen();
+        // HideLoadingScreen();
     }
 
     public void RevealLoadingScreen()
