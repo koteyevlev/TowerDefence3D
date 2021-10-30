@@ -2391,7 +2391,7 @@ MonoBehaviour:
   _androidGameId: 4408813
   _iOsGameId: 4408812
   _testMode: 0
-  _enablePerPlacementMode: 1
+  _enablePerPlacementMode: 0
 --- !u!114 &2306037062443633715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12038,8 +12038,8 @@ MonoBehaviour:
   _endGameMessageText: {fileID: 4534619144073512787}
   _scorePanel: {fileID: 4574960378374424082}
   _onRestartAdUnitName: Interstitial_Android
-  _onMenuAdUnitName: Banner_Android
-  _probabilityOfAds: 50
+  _onMenuAdUnitName: Interstitial_Android
+  _probabilityOfAds: 30
   _background: {fileID: 4530860425994202947}
   _winBackgroundColor: {r: 0.8962264, g: 0.8811003, b: 0.07186722, a: 0}
   _loseBackgroundColor: {r: 0.6132076, g: 0.3293294, b: 0.043387324, a: 0}

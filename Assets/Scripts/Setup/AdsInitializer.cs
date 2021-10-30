@@ -5,8 +5,8 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 {
     [SerializeField] string _androidGameId;
     [SerializeField] string _iOsGameId;
-    [SerializeField] bool _testMode = true;
-    [SerializeField] bool _enablePerPlacementMode = true;
+    [SerializeField] bool _testMode = false;
+    [SerializeField] bool _enablePerPlacementMode = false;
     private string _gameId;
 
     void Awake()
@@ -20,7 +20,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
             ? _iOsGameId
             : _androidGameId;
         Debug.Log(Application.platform);
-        Advertisement.Initialize(_gameId, _testMode, _enablePerPlacementMode, this);
+        Advertisement.Initialize(_gameId, false);
     }
 
     public void OnInitializationComplete()

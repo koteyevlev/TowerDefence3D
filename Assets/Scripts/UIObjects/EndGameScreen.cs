@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+using System.Threading.Tasks;
 
 namespace TowerDefence3d.Scripts.UIObjects
 {
@@ -57,10 +58,10 @@ namespace TowerDefence3d.Scripts.UIObjects
         private const string _menuSceneName = "MainMenu";
 
         [SerializeField]
-        private string _onRestartAdUnitName = "Interstitial_Android";
+        private string _onRestartAdUnitName;
 
         [SerializeField]
-        private string _onMenuAdUnitName = "Interstitial_Android";
+        private string _onMenuAdUnitName;
 
 		/// <summary>
 		/// Text to be displayed on popup
@@ -70,7 +71,7 @@ namespace TowerDefence3d.Scripts.UIObjects
         private const string _levelFailedText = "LEVEL FAILED!";
 
         [SerializeField] 
-        private int _probabilityOfAds = 50;
+        private int _probabilityOfAds = 100;
 
 		/// <summary>
 		/// Background image
@@ -100,23 +101,45 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void GoToMainMenu()
 		{
-            if (Advertisement.IsReady() &&
+			Debug.Log("Main menu");
+
+			if (Advertisement.IsReady() &&
                 GetRandomProbability())
             {
-                Debug.Log("Load ad " + _onMenuAdUnitName);
-                Advertisement.Load(_onMenuAdUnitName);
-                Advertisement.Show(_onMenuAdUnitName);
+				LoadAd(_onMenuAdUnitName);
 			}
+			LoadMenu();
 
-            Time.timeScale = 1f;
+		}
+
+		private void LoadMenu()
+        {
+			Time.timeScale = 1f;
 			SceneManager.LoadScene(_menuSceneName);
 			SafelyUnsubscribe();
+		}
+
+        private void LoadAd(string adName, Action<ShowResult> adCallBackAction = null)
+        {
+			var options = new ShowOptions();
+			if (adCallBackAction == null)
+			{
+				options.resultCallback = DefaultAdCallBackHandler;
+			}
+			else
+			{
+				options.resultCallback = adCallBackAction;
+			}
+
+			Debug.Log("Load ads " + adName);
+			Advertisement.Show(adName);
 		}
 
         private bool GetRandomProbability()
         {
             var gen = new System.Random();
             int prob = gen.Next(100);
+			Debug.Log(prob.ToString() + (prob <= _probabilityOfAds).ToString());
             return prob <= _probabilityOfAds;
 		}
 
@@ -129,9 +152,7 @@ namespace TowerDefence3d.Scripts.UIObjects
             if (Advertisement.IsReady()
             && GetRandomProbability())
             {
-                Debug.Log("Load ad " + _onRestartAdUnitName);
-                Advertisement.Load(_onRestartAdUnitName); 
-                Advertisement.Show(_onRestartAdUnitName);
+				LoadAd(_onRestartAdUnitName);
             }
 
 			Game._instance.StopGame();
@@ -154,6 +175,13 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected void Start()
 		{
+			Debug.Log("Unity Ads initialized: " + Advertisement.isInitialized);
+			Debug.Log("Unity Ads is supported: " + Advertisement.isSupported);
+			Debug.Log("Unity Ads test mode enabled: " + Advertisement.debugMode);
+
+			Advertisement.Load(_onRestartAdUnitName);
+			Advertisement.Load(_onMenuAdUnitName);
+
 			LazyLoad();
 			_endGameCanvas.enabled = false;
 			_nextLevelButton.enabled = false;
@@ -281,6 +309,24 @@ namespace TowerDefence3d.Scripts.UIObjects
 				return 1;
 			}
 			return 0;
+		}
+
+		private void DefaultAdCallBackHandler(ShowResult result)
+		{
+			switch (result)
+			{
+				case ShowResult.Finished:
+					Time.timeScale = 1f;
+					break;
+
+				case ShowResult.Failed:
+					Time.timeScale = 1f;
+					break;
+
+				case ShowResult.Skipped:
+					Time.timeScale = 1f;
+					break;
+			}
 		}
 	}
 }
