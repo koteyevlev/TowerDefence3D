@@ -25,7 +25,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// <summary>
 		/// AudioClip to play when failed
 		/// </summary>
-        [SerializeField]
+		[SerializeField]
         private AudioClip _defeatSound;
 
 		/// <summary>
@@ -166,7 +166,28 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void GoToNextLevel()
 		{
-			GoToMainMenu();
+			GameManager gm = GameManager.instance;
+			LevelItem item = gm.GetLevelForCurrentScene();
+			LevelList list = gm.levelList;
+			int levelCount = list.Count;
+			int index = -1;
+			for (int i = 0; i < levelCount; i++)
+			{
+				if (item == list[i])
+				{
+					index = i;
+					break;
+				}
+			}
+
+			if (index < 0 || index == levelCount - 2)
+			{
+				_nextLevelButton.enabled = false;
+				_nextLevelButton.gameObject.SetActive(false);
+				return;
+			}
+			gm.SetLevel(gm.levelList[index + 1].name);
+			RestartLevel();
 		}
 
 		/// <summary>
