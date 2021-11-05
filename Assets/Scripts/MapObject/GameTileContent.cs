@@ -26,6 +26,17 @@ namespace TowerDefence3d.Scripts.MapObject
             }
         }
 
+        public bool IsTheoreticBlockingPath
+        {
+            get
+            {
+                return
+                    Type == GameTileContentType.Wall
+                    || Type == GameTileContentType.Tower
+                    || IsChangableByRayCast;
+            }
+        }
+
         public void Recycle()
         {
             OriginFactory.Reclaim(this);

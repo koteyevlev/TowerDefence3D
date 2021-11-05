@@ -59,7 +59,7 @@ namespace TowerDefence3d.Scripts.Setup
             Clear();
         }
 
-        public bool FindPaths()
+        public bool FindPaths(bool isBuilding = false)
         {
             foreach (GameTile tile in _tiles)
             {
@@ -86,26 +86,30 @@ namespace TowerDefence3d.Scripts.Setup
                 {
                     if (tile.IsAlternative)
                     {
-                        _searchFrontier.Enqueue(tile.GrowPathNorth());
-                        _searchFrontier.Enqueue(tile.GrowPathSouth());
-                        _searchFrontier.Enqueue(tile.GrowPathEast());
-                        _searchFrontier.Enqueue(tile.GrowPathWest());
+                        _searchFrontier.Enqueue(tile.GrowPathNorth(isBuilding));
+                        _searchFrontier.Enqueue(tile.GrowPathSouth(isBuilding));
+                        _searchFrontier.Enqueue(tile.GrowPathEast(isBuilding));
+                        _searchFrontier.Enqueue(tile.GrowPathWest(isBuilding));
                     }
                     else
                     {
-                        _searchFrontier.Enqueue(tile.GrowPathWest());
-                        _searchFrontier.Enqueue(tile.GrowPathEast());
-                        _searchFrontier.Enqueue(tile.GrowPathSouth());
-                        _searchFrontier.Enqueue(tile.GrowPathNorth());
+                        _searchFrontier.Enqueue(tile.GrowPathWest(isBuilding));
+                        _searchFrontier.Enqueue(tile.GrowPathEast(isBuilding));
+                        _searchFrontier.Enqueue(tile.GrowPathSouth(isBuilding));
+                        _searchFrontier.Enqueue(tile.GrowPathNorth(isBuilding));
                     }
 
                 }
             }
             foreach (GameTile t in _tiles)
             {
-                if (!t.HasPath)
+                if (!t.HasPath && t.Content.Type == GameTileContentType.SpawnPoint)
                 {
                     return false;
+                }
+                else if (!t.HasPath && t.Content.Type != GameTileContentType.SpawnPoint)
+                {
+                    t.HidePath();
                 }
                 t.ShowPath();
             }
@@ -115,8 +119,9 @@ namespace TowerDefence3d.Scripts.Setup
         public bool FindPaths(GameTile tile)
         {
             tile.Content.IsChangableByRayCast = true;
-            var result = FindPaths();
+            var result = FindPaths(true);
             tile.Content.IsChangableByRayCast = false;
+            FindPaths();
             return result;
         }
 

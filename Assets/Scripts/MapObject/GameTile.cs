@@ -69,27 +69,38 @@ namespace TowerDefence3d.Scripts.MapObject
             ExitPoint = transform.localPosition;
         }
 
-        private GameTile GrowPathTo(GameTile neighbor, Direction direction)
+        private GameTile GrowPathTo(GameTile neighbor, Direction direction, bool isBuilding)
         {
             if (!HasPath || neighbor == null || neighbor.HasPath)
             {
                 return null;
             }
 
-            neighbor.PathDirection = direction;
             neighbor._distance = _distance + 1;
             neighbor._nextOnPath = this;
             neighbor.ExitPoint = neighbor.transform.localPosition + direction.GetHalfVector();
 
+            if (isBuilding)
+            {
+                return neighbor.Content.IsTheoreticBlockingPath ? null : neighbor;
+            }
+            neighbor.PathDirection = direction;
+
             return neighbor.Content.IsBlockingPath ? null : neighbor;
         }
 
-        public GameTile GrowPathNorth() => GrowPathTo(_north, Direction.South);
-        public GameTile GrowPathSouth() => GrowPathTo(_south, Direction.North);
-        public GameTile GrowPathWest() => GrowPathTo(_west, Direction.East);
-        public GameTile GrowPathEast() => GrowPathTo(_east, Direction.West);
+        public GameTile GrowPathNorth(bool isBuilding) => GrowPathTo(_north, Direction.South, isBuilding);
+        public GameTile GrowPathSouth(bool isBuilding) => GrowPathTo(_south, Direction.North, isBuilding);
+        public GameTile GrowPathWest(bool isBuilding) => GrowPathTo(_west, Direction.East, isBuilding);
+        public GameTile GrowPathEast(bool isBuilding) => GrowPathTo(_east, Direction.West, isBuilding);
 
-        public void ShowPath()
+
+        public void HidePath()
+        {
+            _arrow.gameObject.SetActive(false);
+        }
+
+         public void ShowPath()
         {
             if (_distance == 0)
             {
