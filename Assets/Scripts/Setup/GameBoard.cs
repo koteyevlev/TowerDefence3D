@@ -183,6 +183,18 @@ namespace TowerDefence3d.Scripts.Setup
             return _toggleTowerInternal(tile, type);
         }
 
+        public void SellTower(GameTile tile, Tower tower)
+        {
+            if (tile.Content.Type == GameTileContentType.Tower)
+            {
+                _contetToUpdate.Remove(tile.Content);
+                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+                FindPaths();
+            }
+
+            Debug.Log("Sell complete");
+        }
+
         [Obsolete]
         public void ToggleTower(GameTile tile, TowerType type)
         {
@@ -252,7 +264,7 @@ namespace TowerDefence3d.Scripts.Setup
             try
             {
                 SpawnByLevel();
-                Debug.Log("Spawn Successful");
+                // Debug.Log("Spawn Successful");
             }
             catch (Exception e)
             {
@@ -267,8 +279,8 @@ namespace TowerDefence3d.Scripts.Setup
             var level = GameManager.instance.GetLevelForCurrentScene();
             foreach (var rock in level.RocksPoints)
             {
-                Debug.Log("rock");
-                Debug.Log(rock);
+                //Debug.Log("rock");
+                // Debug.Log(rock);
                 ToggleWall(_tiles[rock.y + rock.x * level.BoardSize.x]);
             }
 

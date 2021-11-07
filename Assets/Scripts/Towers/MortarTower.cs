@@ -1,4 +1,5 @@
-﻿using TowerDefence3d.Scripts.MapObject;
+﻿using System;
+using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.Setup;
 using UnityEngine;
 
@@ -17,6 +18,14 @@ namespace TowerDefence3d.Scripts.Towers
         [SerializeField]
         private AudioSource _shootSound;
         public override TowerType TowerType => TowerType.Mortar;
+
+        public override string TitleName => "Mortar" + CurrentLevel.ToString();
+        public override string Description => "Super mortar";
+
+        public override string CurrentDPS => CalculateDamage().ToString();
+
+        public override string UpgradeDescription => "+10 DPS, +1 radius";
+
         private float _launchSpeed;
         private float _launchProgress;
 
@@ -75,7 +84,14 @@ namespace TowerDefence3d.Scripts.Towers
             _shootSound.Play();
 
             Game.SpawnShell().Initialize(launchPoint, targetPoint,
-                new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y), _shellBlastRadius, _damage);
+                new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y), _shellBlastRadius, CalculateDamage());
+        }
+
+        private float CalculateDamage() => _damage + ((CurrentLevel - 1) * 10);
+
+        protected override void UpgradeView()
+        {
+            Debug.Log("Upgrade View");
         }
     }
 }

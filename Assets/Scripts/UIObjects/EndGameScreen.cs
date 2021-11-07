@@ -101,7 +101,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		public void GoToMainMenu()
 		{
-			Debug.Log("Main menu");
+			//Debug.Log("Main menu");
 
 			if (Advertisement.IsReady() &&
                 GetRandomProbability())
@@ -139,7 +139,7 @@ namespace TowerDefence3d.Scripts.UIObjects
         {
             var gen = new System.Random();
             int prob = gen.Next(100);
-			Debug.Log(prob.ToString() + (prob <= _probabilityOfAds).ToString());
+			// Debug.Log(prob.ToString() + (prob <= _probabilityOfAds).ToString());
             return prob <= _probabilityOfAds;
 		}
 
@@ -196,9 +196,9 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		protected void Start()
 		{
-			Debug.Log("Unity Ads initialized: " + Advertisement.isInitialized);
-			Debug.Log("Unity Ads is supported: " + Advertisement.isSupported);
-			Debug.Log("Unity Ads test mode enabled: " + Advertisement.debugMode);
+			//Debug.Log("Unity Ads initialized: " + Advertisement.isInitialized);
+			//Debug.Log("Unity Ads is supported: " + Advertisement.isSupported);
+			//Debug.Log("Unity Ads test mode enabled: " + Advertisement.debugMode);
 
 			Advertisement.Load(_onRestartAdUnitName);
 			Advertisement.Load(_onMenuAdUnitName);

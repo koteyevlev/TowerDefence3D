@@ -48,6 +48,10 @@ namespace TowerDefence3d.Scripts.Setup
         public static int CurrentHealth => _instance._currentPlayerhealth;
         public Currency Currency => _currency;
 
+        public Tower SelectedTower { get; set; }
+
+        public GameTile SelectedTowerTile { get; set; }
+
         private bool _scenarioInProcess;
         private int _currentPlayerhealth;
         private bool _isPaused = false;
@@ -136,8 +140,16 @@ namespace TowerDefence3d.Scripts.Setup
         private void HandleTouch()
         {
             GameTile tile = _board.GetTile(TouchRay);
-            if (tile != null && tile.Content.Type == GameTileContentType.Tower)
+            if (SelectedTower)
             {
+                // disable
+                Debug.Log(SelectedTower.name);
+                SelectedTower.OnCanvasClick();
+            }
+            else if (tile != null && tile.Content.Type == GameTileContentType.Tower)
+            {
+                SelectedTower = (Tower)tile.Content;
+                SelectedTowerTile = tile;
                 tile.Content.OnClick();
             }
 //            else if (tile != null)
@@ -212,6 +224,22 @@ namespace TowerDefence3d.Scripts.Setup
             Time.timeScale = _isPaused ? 0f : 1f;
         }
 
+        public void SellSelectedTower()
+        {
+            Debug.Log("SellSelectedTower click");
+            Currency.IncrementCurrency(SelectedTower.GetSellLevel());
+            _board.SellTower(SelectedTowerTile, SelectedTower);
+            CleanSelectedTower();
+        }
+
+        public void UpgradeSelectedTower()
+        {
+            Debug.Log("UpgradeSelectedTower click");
+            SelectedTower.UpgradeLevel();
+            Currency.DecrementCurrency(SelectedTower.GetCostForNextLevel());
+            CleanSelectedTower();
+        }
+
         private void OnStartGame()
         {
             _isPaused = false;
@@ -231,6 +259,12 @@ namespace TowerDefence3d.Scripts.Setup
             yield return new WaitForSeconds(_prepareTime);
             _activeScenario = _scenario.Begin();
             _scenarioInProcess = true;
+        }
+
+        public void CleanSelectedTower()
+        {
+            SelectedTower = null;
+            SelectedTowerTile = null;
         }
     }
 }

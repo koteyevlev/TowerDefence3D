@@ -18,6 +18,12 @@ namespace TowerDefence3d.Scripts.Towers
 
         public override TowerType TowerType => TowerType.Laser;
 
+        public override string TitleName => "Laser " + CurrentLevel.ToString();
+        public override string Description => "Incredible laser";
+
+        public override string CurrentDPS => CalculateDamage().ToString();
+        public override string UpgradeDescription => "+10 DPS, +1 radius";
+
         private TargetPoint _target;
 
         private void Awake()
@@ -49,8 +55,15 @@ namespace TowerDefence3d.Scripts.Towers
             _laserBeam.localPosition = _laserStartPosition + 0.5f * distance * _laserBeam.forward;
             if (!_shootSound.isPlaying)
                 _shootSound.Play();
-            _target.Enemy.TakeDamage(_damagePerSecond * Time.deltaTime);
+            _target.Enemy.TakeDamage(CalculateDamage() * Time.deltaTime);
         }
 
+
+        private float CalculateDamage() => _damagePerSecond + ((CurrentLevel - 1) * 10);
+
+        protected override void UpgradeView()
+        {
+            Debug.Log("Upgrade View");
+        }
     }
 }

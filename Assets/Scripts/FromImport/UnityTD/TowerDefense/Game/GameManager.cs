@@ -50,7 +50,7 @@ namespace TowerDefense.Game
 		public LevelItem GetLevelForCurrentScene()
 		{
 			//string SceneName = SceneManager.GetActiveScene().name;
-			Debug.Log(_currentLevel);
+			// Debug.Log(_currentLevel);
 			return levelList.GetLevelByScene(_currentLevel);
 		}
 
