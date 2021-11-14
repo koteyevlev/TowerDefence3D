@@ -17,10 +17,12 @@ namespace TowerDefence3d.Scripts.Towers
         private float _damage;
         [SerializeField]
         private AudioSource _shootSound;
+        [SerializeField]
+        private Material[] _levelMaterials;
         public override TowerType TowerType => TowerType.Mortar;
 
-        public override string TitleName => "Mortar" + CurrentLevel.ToString();
-        public override string Description => "Super mortar";
+        public override string TitleName => "Mortar " + CurrentLevel.ToString();
+        public override string Description => "Super heavy mortar";
 
         public override string CurrentDPS => CalculateDamage().ToString();
 
@@ -91,6 +93,7 @@ namespace TowerDefence3d.Scripts.Towers
 
         protected override void UpgradeView()
         {
+            ChangeMaterial(_levelMaterials[CurrentLevel - 1]);
             Debug.Log("Upgrade View");
         }
     }

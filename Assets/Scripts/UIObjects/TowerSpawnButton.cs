@@ -16,10 +16,10 @@ namespace TowerDefence3d.Scripts.UIObjects
 	[RequireComponent(typeof(RectTransform))]
 	public class TowerSpawnButton : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
-        private static List<string> _exceptRenders = new List<string>
-        {
-            "RadiusVisualiser",
-        };
+        //private static List<string> _exceptRenders = new List<string>
+        //{
+        //    "RadiusVisualiser",
+        //};
 		/// <summary>
 		/// The text attached to the button
 		/// </summary>
@@ -72,7 +72,7 @@ namespace TowerDefence3d.Scripts.UIObjects
 		/// </summary>
 		Currency _currency;
 
-        private List<MeshRenderer> _towerRenderes;
+        //private List<MeshRenderer> _towerRenderes;
         private bool _placementState;
 
         /// <summary>
@@ -102,13 +102,15 @@ namespace TowerDefence3d.Scripts.UIObjects
         {
             if (state)
             {
-                _towerRenderes.ForEach(p => p.material = _validMaterial);
+                _draggedTower.ChangeMaterial(_validMaterial);
+                // _towerRenderes.ForEach(p => p.material = _validMaterial);
             }
             else
             {
-				_towerRenderes.ForEach(p => p.material = _invalidMaterial);
-}
-}
+                _draggedTower.ChangeMaterial(_invalidMaterial);
+                // _towerRenderes.ForEach(p => p.material = _invalidMaterial);
+            }
+        }
 
 		/// <summary>
 		/// Define the button information for the tower
@@ -155,8 +157,8 @@ namespace TowerDefence3d.Scripts.UIObjects
                 return;
             }
 			_draggedTower = _factory.Get(_tower.TowerType);
-            _towerRenderes = new List<MeshRenderer>();
-            AddRendersOfChild(_draggedTower.transform);
+            //_towerRenderes = new List<MeshRenderer>();
+            // AddRendersOfChild(_draggedTower.transform);
 
 			var plane = new Plane(Vector3.up, Vector3.zero);
             if (plane.Raycast(TouchRay, out var position))
@@ -167,30 +169,30 @@ namespace TowerDefence3d.Scripts.UIObjects
 			ChangeState(false);
         }
 
-        private void AddRendersOfChild(Transform itemTransform)
-        {
-            int numOfChildren = itemTransform.childCount;
+        //private void AddRendersOfChild(Transform itemTransform)
+        //{
+        //    int numOfChildren = itemTransform.childCount;
 
-            for (int i = 0; i < numOfChildren; i++)
-            {
-                GameObject child = itemTransform.GetChild(i).gameObject;
-                if (_exceptRenders.Contains(child.gameObject.name))
-                {
-                    continue;
-                }
+        //    for (int i = 0; i < numOfChildren; i++)
+        //    {
+        //        GameObject child = itemTransform.GetChild(i).gameObject;
+        //        if (_exceptRenders.Contains(child.gameObject.name))
+        //        {
+        //            continue;
+        //        }
 
-                var render = child.GetComponent<MeshRenderer>();
-                if (render != null)
-                {
-                    _towerRenderes.Add(render);
-                }
+        //        var render = child.GetComponent<MeshRenderer>();
+        //        if (render != null)
+        //        {
+        //            _towerRenderes.Add(render);
+        //        }
                 
-                if (child.transform.childCount > 0)
-                {
-                    AddRendersOfChild(child.transform);
-                }
-            }
-        }
+        //        if (child.transform.childCount > 0)
+        //        {
+        //            AddRendersOfChild(child.transform);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Update the button's button state based on cost

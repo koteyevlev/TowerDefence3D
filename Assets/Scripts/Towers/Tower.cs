@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.UIObjects;
 using UnityEngine;
@@ -27,11 +28,18 @@ namespace TowerDefence3d.Scripts.Towers
         public float PurchaseCost => _purchaseCost;
         private const int ENEMY_LAYER_MASK = 1 << 9;
 
+        private static List<string> _exceptRenders = new List<string>
+        {
+            "RadiusVisualiser",
+        };
+
         public abstract TowerType TowerType { get; }
 
         public int CurrentLevel { get; set; } = 1;
 
         private bool _isRadiusEnabled;
+
+        private List<MeshRenderer> _towerRenderes;
 
         private float _extraCost = 0;
 
@@ -56,6 +64,14 @@ namespace TowerDefence3d.Scripts.Towers
                 _targetingRange * 2, 
                 _targetingRange * 2, 
                 _targetingRange * 2);
+
+            _towerRenderes = new List<MeshRenderer>();
+            AddRendersOfChild(this.transform);
+        }
+
+        public void ChangeMaterial(Material material)
+        {
+            _towerRenderes.ForEach(p => p.material = material);
         }
 
         protected bool IsAcquireTarget(out TargetPoint target)
@@ -125,5 +141,30 @@ namespace TowerDefence3d.Scripts.Towers
         }
 
         protected abstract void UpgradeView();
+
+        private void AddRendersOfChild(Transform itemTransform)
+        {
+            int numOfChildren = itemTransform.childCount;
+
+            for (int i = 0; i < numOfChildren; i++)
+            {
+                GameObject child = itemTransform.GetChild(i).gameObject;
+                if (_exceptRenders.Contains(child.gameObject.name))
+                {
+                    continue;
+                }
+
+                var render = child.GetComponent<MeshRenderer>();
+                if (render != null)
+                {
+                    _towerRenderes.Add(render);
+                }
+
+                if (child.transform.childCount > 0)
+                {
+                    AddRendersOfChild(child.transform);
+                }
+            }
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace TowerDefence3d.Scripts.Towers
         private float _damagePerSecond = 30f;
         [SerializeField]
         private AudioSource _shootSound;
+        [SerializeField]
+        private Material[] _levelMaterials;
         private Vector3 _laserBeamScale;
         private Vector3 _laserStartPosition;
 
@@ -63,6 +65,7 @@ namespace TowerDefence3d.Scripts.Towers
 
         protected override void UpgradeView()
         {
+            ChangeMaterial(_levelMaterials[CurrentLevel - 1]);
             Debug.Log("Upgrade View");
         }
     }
