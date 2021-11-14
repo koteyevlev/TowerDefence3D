@@ -12019,7 +12019,7 @@ GameObject:
   - component: {fileID: 4530849591892453589}
   - component: {fileID: 4574887086212564862}
   m_Layer: 5
-  m_Name: Game Over
+  m_Name: MenuLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

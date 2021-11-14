@@ -2084,6 +2084,10 @@ MonoBehaviour:
   _shellBlastRadius: 1.52
   _damage: 50
   _shootSound: {fileID: -2097219916645120685}
+  _levelMaterials:
+  - {fileID: 2100000, guid: 4d1bbf0dac892fb4eaf4f532efc7274a, type: 2}
+  - {fileID: 2100000, guid: 8f1dc133e8f0b6143ac20da1dda1af7e, type: 2}
+  - {fileID: 2100000, guid: e3d499f49667f894196977657817c648, type: 2}
 --- !u!82 &-2097219916645120685
 AudioSource:
   m_ObjectHideFlags: 0

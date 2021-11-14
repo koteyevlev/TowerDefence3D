@@ -4,6 +4,7 @@ using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.Towers;
 using TowerDefense.Game;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace TowerDefence3d.Scripts.Setup
 {
@@ -18,7 +19,7 @@ namespace TowerDefence3d.Scripts.Setup
 
         private Vector2Int _size;
 
-        private GameTile[] _tiles;
+        private List<GameTile> _tiles;
         private Queue<GameTile> _searchFrontier = new Queue<GameTile>();
         private GameTileContentFactory _contentFactory;
         private List<GameTile> _spawnPoints = new List<GameTile>();
@@ -30,13 +31,14 @@ namespace TowerDefence3d.Scripts.Setup
             _size = GameManager.instance.GetLevelForCurrentScene().BoardSize;
             _ground.localScale = new Vector3(_size.x, _size.y, 1f);
             Vector2 offset = new Vector2((_size.x - 1) * 0.5f, (_size.y - 1) * 0.5f);
-            _tiles = new GameTile[_size.x * _size.y];
+            _tiles = new List<GameTile>(_size.x * _size.y);
             _contentFactory = contentFactory;
             for (int i = 0, y = 0; y < _size.y; y++)
             {
                 for (int x = 0; x < _size.x; x++, i++)
                 {
-                    GameTile tile = _tiles[i] = Instantiate(_tilePrefab);
+                    GameTile tile = Instantiate(_tilePrefab);
+                    _tiles.Add(tile);
                     tile.transform.SetParent(transform, false);
                     tile.transform.localPosition = new Vector3(x - offset.x, 0f, y - offset.y);
 
@@ -270,8 +272,19 @@ namespace TowerDefence3d.Scripts.Setup
             {
                 Debug.LogError(e.Message);
                 ToggleDestination(_tiles[0]);
-                ToggleSpawnPoint(_tiles[_tiles.Length - 1]);
+                ToggleSpawnPoint(_tiles[_tiles.Count - 1]);
             }
+        }
+
+        public void ReInitialize()
+        {
+            foreach (var tile in _tiles)
+            {
+                tile.HidePath();
+                _contentFactory.Reclaim(tile.Content);
+                Destroy(tile);
+            }
+            Initialize(_contentFactory);
         }
 
         private void SpawnByLevel()

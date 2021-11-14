@@ -206,7 +206,7 @@ namespace TowerDefence3d.Scripts.Setup
             }
             _enemies.Clear();
             _nonEnemies.Clear();
-            _board.Clear();
+            _board.ReInitialize();
             _currentPlayerhealth = _startingPlayerHealth;
             _currency.SetCurrency(_firstCurrency);
             OnNewGame(EventArgs.Empty);

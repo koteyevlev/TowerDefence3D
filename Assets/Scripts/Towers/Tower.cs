@@ -31,6 +31,7 @@ namespace TowerDefence3d.Scripts.Towers
         private static List<string> _exceptRenders = new List<string>
         {
             "RadiusVisualiser",
+            "LaserBeam",
         };
 
         public abstract TowerType TowerType { get; }
