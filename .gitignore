@@ -59,8 +59,8 @@ dlldata.c
 BenchmarkDotNet.Artifacts/
 
 # .NET Core
-project.lock.json
-project.fragment.lock.json
+# project.lock.json
+# project.fragment.lock.json
 artifacts/
 
 # ASP.NET Scaffolding
@@ -197,7 +197,7 @@ PublishScripts/
 # NuGet Symbol Packages
 *.snupkg
 # The packages folder can be ignored because of Package Restore
-**/[Pp]ackages/*
+ **/[Pp]ackages/*
 # except build/, which is used as an MSBuild target.
 !**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
@@ -437,3 +437,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+/Assets/Packages
+/Packages/System.Runtime.CompilerServices.Unsafe.4.5.2
+/Packages/Unity.5.11.10
