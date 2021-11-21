@@ -18,6 +18,8 @@ namespace TowerDefense.Game
 
         private string _currentLevel = "Level 1";
 
+		public float LevelDifficults { get; set; } = 1f;
+
 		/// <summary>
 		/// Set sleep timeout to never sleep
 		/// </summary>
@@ -52,6 +54,13 @@ namespace TowerDefense.Game
 			//string SceneName = SceneManager.GetActiveScene().name;
 			// Debug.Log(_currentLevel);
 			return levelList.GetLevelByScene(_currentLevel);
+		}
+
+		public void SetDifficults(float difficult)
+		{
+			m_DataStore.levelDifficults = difficult;
+			LevelDifficults = difficult;
+			Debug.Log("Set difficult " + difficult.ToString());
 		}
 
 		/// <summary>

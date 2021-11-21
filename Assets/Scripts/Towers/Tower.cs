@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TowerDefence3d.Scripts.MapObject;
 using TowerDefence3d.Scripts.UIObjects;
+using TowerDefense.Game;
 using UnityEngine;
 
 namespace TowerDefence3d.Scripts.Towers
@@ -46,6 +47,8 @@ namespace TowerDefence3d.Scripts.Towers
 
         private float _totalCost => _purchaseCost + _extraCost;
 
+        protected float _gameDifficult = 1f;
+
         public int GetSellLevel() => (int)(_totalCost / 2);
 
         // TODO временный костыль
@@ -66,6 +69,7 @@ namespace TowerDefence3d.Scripts.Towers
                 _targetingRange * 2, 
                 _targetingRange * 2);
 
+            _gameDifficult = GameManager.instance.LevelDifficults;
             _towerRenderes = new List<MeshRenderer>();
             AddRendersOfChild(this.transform);
         }

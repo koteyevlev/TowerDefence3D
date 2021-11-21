@@ -11,6 +11,8 @@
 
 		public float musicVolume = 1;
 
+		public float levelDifficults = 0.5f;
+
 		/// <summary>
 		/// Called just before we save
 		/// </summary>

@@ -89,7 +89,8 @@ namespace TowerDefence3d.Scripts.Towers
                 new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y), _shellBlastRadius, CalculateDamage());
         }
 
-        private float CalculateDamage() => _damage + ((CurrentLevel - 1) * 10);
+        private float CalculateDamage() => 
+            (_damage + ((CurrentLevel - 1) * 10)) * (1 / _gameDifficult);
 
         protected override void UpgradeView()
         {

@@ -61,7 +61,8 @@ namespace TowerDefence3d.Scripts.Towers
         }
 
 
-        private float CalculateDamage() => _damagePerSecond + ((CurrentLevel - 1) * 10);
+        private float CalculateDamage() => 
+            _damagePerSecond + ((CurrentLevel - 1) * 10) * (1 / _gameDifficult);
 
         protected override void UpgradeView()
         {
